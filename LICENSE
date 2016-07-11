@@ -1,3 +1,19 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Gist
+ @lolevsky
+ Unwatch 1
+  Star 0
+ Fork 0 lolevsky/Android-Clean-Architecture
+ Code  Issues 0  Pull requests 0  Wiki  Pulse  Graphs  Settings
+Branch: master Find file Copy pathAndroid-Clean-Architecture/LICENSE
+82e4030  a minute ago
+@lolevsky lolevsky Initial commit
+1 contributor
+RawBlameHistory     675 lines (553 sloc)  34.3 KB
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
@@ -672,3 +688,5 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.
+Status API Training Shop Blog About
+© 2016 GitHub, Inc. Terms Privacy Security Contact Help

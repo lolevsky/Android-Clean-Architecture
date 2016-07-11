@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+    }
+
+    compileOptions {
+        sourceCompatibility rootProject.ext.sourceCompatibility
+        targetCompatibility rootProject.ext.sourceCompatibility
+    }
+}
+
+dependencies {
+    compile project(':domain')
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit"
+    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.ext.retrofit"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofit"
+    compile "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttp"
+    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttp"
+    compile "com.android.support:support-v4:$rootProject.ext.androidSupport"
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'javax.annotation:jsr250-api:1.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+}
