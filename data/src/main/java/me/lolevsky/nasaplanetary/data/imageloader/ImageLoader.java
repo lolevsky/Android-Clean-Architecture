@@ -6,6 +6,8 @@ import com.bumptech.glide.MemoryCategory;
 import android.app.Application;
 import android.widget.ImageView;
 
+import me.lolevsky.nasaplanetary.domain.imageloader.IImageLoader;
+
 public class ImageLoader implements IImageLoader {
     Application context;
 

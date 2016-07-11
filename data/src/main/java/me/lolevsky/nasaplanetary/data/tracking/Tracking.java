@@ -1,4 +1,6 @@
 package me.lolevsky.nasaplanetary.data.tracking;
 
-public class Tracking implements ITracking{
+import me.lolevsky.nasaplanetary.domain.tracking.ITracking;
+
+public class Tracking implements ITracking {
 }
