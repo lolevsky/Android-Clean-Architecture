@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.lolevsky.nasaplanetary.MainApplication;
 import me.lolevsky.nasaplanetary.R;
-import me.lolevsky.nasaplanetary.data.imageloader.IImageLoader;
+import me.lolevsky.nasaplanetary.domain.imageloader.IImageLoader;
 import me.lolevsky.nasaplanetary.model.ApodModel;
 import me.lolevsky.nasaplanetary.presenter.PlanetaryApodPresenter;
 import me.lolevsky.nasaplanetary.presenter.Presenter;

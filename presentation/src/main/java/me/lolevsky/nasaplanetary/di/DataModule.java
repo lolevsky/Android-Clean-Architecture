@@ -5,11 +5,11 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import me.lolevsky.nasaplanetary.MainApplication;
-import me.lolevsky.nasaplanetary.data.imageloader.IImageLoader;
+import me.lolevsky.nasaplanetary.domain.imageloader.IImageLoader;
 import me.lolevsky.nasaplanetary.data.imageloader.ImageLoader;
 import me.lolevsky.nasaplanetary.data.repository.PlanetaryApod;
 import me.lolevsky.nasaplanetary.data.net.NasaService;
-import me.lolevsky.nasaplanetary.data.tracking.ITracking;
+import me.lolevsky.nasaplanetary.domain.tracking.ITracking;
 import me.lolevsky.nasaplanetary.data.tracking.Tracking;
 import me.lolevsky.nasaplanetary.domain.repository.IPlanetaryApod;
 

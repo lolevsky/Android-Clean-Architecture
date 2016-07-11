@@ -1,4 +1,4 @@
-package me.lolevsky.nasaplanetary.data.imageloader;
+package me.lolevsky.nasaplanetary.domain.imageloader;
 
 import android.widget.ImageView;
 
