@@ -12,8 +12,6 @@ public abstract class BaseActivity<T extends IView, M> extends AppCompatActivity
 
     abstract Presenter getPresenter();
 
-    abstract T getView();
-
     @Override protected void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putParcelable(SAVE_INSTANCE_STATE, Parcels.wrap(getPresenter().getModel()));
         super.onSaveInstanceState(savedInstanceState);
@@ -29,7 +27,7 @@ public abstract class BaseActivity<T extends IView, M> extends AppCompatActivity
 
     @Override protected void onStart() {
         super.onStart();
-        getPresenter().setView(getView());
+        getPresenter().setView(this);
     }
 
     @Override protected void onStop() {

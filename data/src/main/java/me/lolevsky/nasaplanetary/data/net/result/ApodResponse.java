@@ -10,9 +10,9 @@ public class ApodResponse {
     @SerializedName("hdurl")
     String hdurl;
     @SerializedName("media_type")
-    String media_type;
+    String mediaType;
     @SerializedName("service_version")
-    String service_version;
+    String serviceVersion;
     @SerializedName("title")
     String title;
     @SerializedName("url")
@@ -36,12 +36,12 @@ public class ApodResponse {
         return hdurl;
     }
 
-    public String getMedia_type() {
-        return media_type;
+    public String getMediaType() {
+        return mediaType;
     }
 
-    public String getService_version() {
-        return service_version;
+    public String getServiceVersion() {
+        return serviceVersion;
     }
 
     public String getTitle() {

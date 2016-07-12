@@ -22,7 +22,7 @@ public class PlanetaryApodInteraptor extends BaseInteractor {
         this.planetaryApod = Preconditions.checkNotNull(planetaryApod);
     }
 
-    @Override protected Observable buildUseCaseObservable() {
+    @Override protected Observable buildUseCaseObservable(String... params) {
         return planetaryApod.getPlanetaryApod();
     }
 }

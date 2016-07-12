@@ -22,11 +22,11 @@ public abstract class BaseInteractor {
         this.ioScheduler = Preconditions.checkNotNull(ioScheduler);
     }
 
-    protected abstract Observable buildUseCaseObservable();
+    protected abstract Observable buildUseCaseObservable(String... params);
 
     @SuppressWarnings("unchecked")
-    public void execute(Subscriber UseCaseSubscriber) {
-        this.subscription = this.buildUseCaseObservable()
+    public void execute(Subscriber UseCaseSubscriber, String... params) {
+        this.subscription = this.buildUseCaseObservable(params)
                                 .subscribeOn(ioScheduler)
                                 .observeOn(mainScheduler)
                                 .subscribe(UseCaseSubscriber);

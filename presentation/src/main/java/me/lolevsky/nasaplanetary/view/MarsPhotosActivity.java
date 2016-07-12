@@ -1,15 +1,11 @@
 package me.lolevsky.nasaplanetary.view;
 
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -18,49 +14,35 @@ import butterknife.ButterKnife;
 import me.lolevsky.nasaplanetary.MainApplication;
 import me.lolevsky.nasaplanetary.R;
 import me.lolevsky.nasaplanetary.domain.imageloader.IImageLoader;
-import me.lolevsky.nasaplanetary.model.ApodModel;
-import me.lolevsky.nasaplanetary.presenter.PlanetaryApodPresenter;
+import me.lolevsky.nasaplanetary.model.MarsPhotosModel;
+import me.lolevsky.nasaplanetary.presenter.MarsPhotosPresenter;
 import me.lolevsky.nasaplanetary.presenter.Presenter;
 
-public class PlanetaryApodActivity extends BaseActivity<IView, ApodModel> {
-    @Inject PlanetaryApodPresenter planetaryApodPresenter;
+public class MarsPhotosActivity extends BaseActivity<IView, MarsPhotosModel> {
+    @Inject MarsPhotosPresenter marsPhotosPresenter;
     @Inject IImageLoader imageLoader;
 
-    @BindView(R.id.date) TextView dateTextView;
-    @BindView(R.id.explanation) TextView explanationTextView;
-    @BindView(R.id.copyright) TextView copyrightTextView;
-    @BindView(R.id.collapsible_toolbar) Toolbar toolbar;
-    @BindView(R.id.collapsing_toolbar_layout) CollapsingToolbarLayout cllapsingToolbarLayout;
+    @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.coordinator_layout) CoordinatorLayout coordinatorLayout;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
-    @BindView(R.id.image_header) ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MainApplication) getApplication()).getApplicationComponent().inject(this);
 
-        setContentView(R.layout.activity_planetary_apod);
+        setContentView(R.layout.activity_mars_photos);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
 
         if (savedInstanceState == null) {
-            planetaryApodPresenter.loadData();
+            marsPhotosPresenter.loadData();
         }
-    }
-
-    private void setTitle(String title) {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(title);
-        }
-
-        cllapsingToolbarLayout.setTitle(title);
     }
 
     @Override Presenter getPresenter() {
-        return planetaryApodPresenter;
+        return null;
     }
 
     @Override public void onLoading() {
@@ -68,13 +50,8 @@ public class PlanetaryApodActivity extends BaseActivity<IView, ApodModel> {
         coordinatorLayout.setVisibility(View.GONE);
     }
 
-    @Override public void onComplete(ApodModel model) {
-        setTitle(model.getTitle());
-        dateTextView.setText(model.getDate());
-        explanationTextView.setText(model.getExplanation());
-        copyrightTextView.setText(model.getCopyright());
+    @Override public void onComplete(MarsPhotosModel model) {
 
-        imageLoader.loadImage(model.getUrl(), imageView);
 
         progressBar.setVisibility(View.GONE);
         coordinatorLayout.setVisibility(View.VISIBLE);
