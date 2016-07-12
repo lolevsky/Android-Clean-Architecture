@@ -13,11 +13,11 @@ import butterknife.ButterKnife;
 import me.lolevsky.nasaplanetary.R;
 import me.lolevsky.nasaplanetary.model.objects.MainScreen;
 
-public class MainScreenAdapter extends RecyclerView.Adapter<MainScreenAdapter.MyViewHolder> {
+public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.MyViewHolder> {
 
     private List<MainScreen> mainList;
 
-    public MainScreenAdapter() {
+    public MainViewAdapter() {
 
     }
 

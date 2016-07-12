@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import javax.inject.Inject;
 
@@ -16,12 +15,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.lolevsky.nasaplanetary.MainApplication;
 import me.lolevsky.nasaplanetary.R;
-import me.lolevsky.nasaplanetary.adapters.MainScreenAdapter;
+import me.lolevsky.nasaplanetary.adapters.MainViewAdapter;
 import me.lolevsky.nasaplanetary.domain.imageloader.IImageLoader;
 import me.lolevsky.nasaplanetary.model.MainScreenModule;
-import me.lolevsky.nasaplanetary.model.MarsPhotosModel;
 import me.lolevsky.nasaplanetary.presenter.MainPresenter;
-import me.lolevsky.nasaplanetary.presenter.MarsPhotosPresenter;
 import me.lolevsky.nasaplanetary.presenter.Presenter;
 
 public class MainActivity extends BaseActivity<IView, MainScreenModule> {
@@ -32,7 +29,7 @@ public class MainActivity extends BaseActivity<IView, MainScreenModule> {
     @BindView(R.id.recycler) RecyclerView recyclerView;
     @BindView(R.id.coordinator_layout) CoordinatorLayout coordinatorLayout;
 
-    MainScreenAdapter mainScreenAdapter;
+    MainViewAdapter mainViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +41,11 @@ public class MainActivity extends BaseActivity<IView, MainScreenModule> {
 
         setSupportActionBar(toolbar);
 
-        mainScreenAdapter = new MainScreenAdapter();
+        mainViewAdapter = new MainViewAdapter();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mainScreenAdapter);
+        recyclerView.setAdapter(mainViewAdapter);
 
         if (savedInstanceState == null) {
             mainPresenter.loadData();
@@ -64,7 +61,7 @@ public class MainActivity extends BaseActivity<IView, MainScreenModule> {
     }
 
     @Override public void onComplete(MainScreenModule model) {
-        mainScreenAdapter.setList(model.getEntityList());
+        mainViewAdapter.setList(model.getEntityList());
     }
 
     @Override public void onError(String error) {
