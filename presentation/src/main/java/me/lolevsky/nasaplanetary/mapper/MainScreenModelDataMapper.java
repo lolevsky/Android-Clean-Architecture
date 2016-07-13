@@ -5,9 +5,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.internal.Preconditions;
-import me.lolevsky.nasaplanetary.data.net.result.ApodResponse;
+import me.lolevsky.nasaplanetary.R;
 import me.lolevsky.nasaplanetary.domain.entety.MainScreenEntity;
-import me.lolevsky.nasaplanetary.model.ApodModel;
 import me.lolevsky.nasaplanetary.model.MainScreenModule;
 import me.lolevsky.nasaplanetary.model.objects.MainScreen;
 
@@ -21,8 +20,8 @@ public class MainScreenModelDataMapper implements IModelDataMapper<List<MainScre
 
         MainScreenModule mainScreenModule = new MainScreenModule();
 
-        for(MainScreenEntity mainScreenEntity : screenEntities){
-            mainScreenModule.setAddItem(new MainScreen(mainScreenEntity.getName(), mainScreenEntity.getImageUrl()));
+        for(int i = 0 ; i < screenEntities.size() ; i ++){
+            mainScreenModule.setAddItem(new MainScreen(screenEntities.get(i).getName(), i == 0 ? R.drawable.item_2 : R.drawable.item_1));
         }
 
         return mainScreenModule;

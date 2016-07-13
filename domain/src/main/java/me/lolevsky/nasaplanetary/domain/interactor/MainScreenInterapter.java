@@ -24,8 +24,8 @@ public class MainScreenInterapter extends BaseInteractor {
     @Override protected Observable buildUseCaseObservable(String... params) {
         List<MainScreenEntity> entities = new ArrayList<>();
 
-        entities.add(new MainScreenEntity("test1", null));
-        entities.add(new MainScreenEntity("test2", null));
+        entities.add(new MainScreenEntity("Astronomy Picture of the Day"));
+        entities.add(new MainScreenEntity("Mars Rover Photos"));
 
         return Observable.just(entities);
     }

@@ -15,21 +15,23 @@ import butterknife.OnClick;
 import me.lolevsky.nasaplanetary.R;
 import me.lolevsky.nasaplanetary.domain.imageloader.IImageLoader;
 import me.lolevsky.nasaplanetary.model.objects.MainScreen;
+import me.lolevsky.nasaplanetary.model.objects.MarsPhoto;
 import me.lolevsky.nasaplanetary.widget.ProgressImageView;
 
-public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.MyViewHolder> {
+public class MarsPhotosAdapter extends RecyclerView.Adapter<MarsPhotosAdapter.MyViewHolder> {
 
-    private List<MainScreen> mainList;
+    private List<MarsPhoto> mainList;
     private IImageLoader imageLoader;
     private OnItemClicked onItemClicked;
 
-    public MainViewAdapter(IImageLoader imageLoader, OnItemClicked onItemClicked) {
+    public MarsPhotosAdapter(IImageLoader imageLoader, OnItemClicked onItemClicked) {
         this.imageLoader = imageLoader;
         this.onItemClicked = onItemClicked;
     }
 
-    public void setList(List<MainScreen> mainList) {
+    public void setList(List<MarsPhoto> mainList) {
         this.mainList = mainList;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -43,11 +45,12 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.position = position;
 
-        MainScreen movie = mainList.get(position);
-        holder.title.setText(movie.getName());
+        MarsPhoto marsPhoto = mainList.get(position);
+        holder.title.setText(marsPhoto.getRoverName() + " - " + marsPhoto.getCameraFullName());
 
-        holder.image.hideProgressBar();
-        imageLoader.loadImage(movie.getImageId(), holder.image.getImageView());
+        holder.image.getProgressBar().setVisibility(View.VISIBLE);
+        imageLoader.loadImage(marsPhoto.getImgSrc(), R.drawable.place_holder, holder.image.getImageView(), holder
+                .image.getProgressBar());
     }
 
     @Override

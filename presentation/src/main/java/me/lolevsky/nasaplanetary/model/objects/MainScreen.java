@@ -1,16 +1,23 @@
 package me.lolevsky.nasaplanetary.model.objects;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class MainScreen {
     String name;
-    String imageUrl;
+    int imageId;
 
-    public MainScreen(String name, String imageUrl){
-        this.name = name;
-        this.imageUrl = imageUrl;
+    public MainScreen(){
+
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public MainScreen(String name, int imageId){
+        this.name = name;
+        this.imageId = imageId;
+    }
+
+    public int getImageId() {
+        return imageId;
     }
 
     public String getName() {

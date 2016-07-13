@@ -1,10 +1,13 @@
 package me.lolevsky.nasaplanetary.model;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import me.lolevsky.nasaplanetary.model.objects.MainScreen;
 
+@Parcel
 public class MainScreenModule {
     List<MainScreen> entityList = new ArrayList<>();
 

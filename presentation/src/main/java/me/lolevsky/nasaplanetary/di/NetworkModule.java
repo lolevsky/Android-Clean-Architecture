@@ -45,7 +45,7 @@ public class NetworkModule {
                 Response originalResponse = chain.proceed(chain.request());
                 return originalResponse.newBuilder()
                                        .header("Cache-Control", String.format("max-age=%d, only-if-cached, " +
-                                                                              "max-stale=%d", 60*2, 0))
+                                                                              "max-stale=%d", 60*4, 0))
                                        .build();
             }
         };

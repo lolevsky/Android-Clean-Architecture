@@ -1,6 +1,5 @@
 package me.lolevsky.nasaplanetary.data.net;
 
-import java.util.List;
 import java.util.Map;
 
 import me.lolevsky.nasaplanetary.data.net.result.ApodResponse;
@@ -11,5 +10,6 @@ import rx.Observable;
 
 public interface NasaService {
     @GET("/planetary/apod") Observable<ApodResponse> getPlanetaryApod();
-    @GET("/mars-photos/api/v1/rovers/curiosity/photos") Observable<List<MarsPhotosResponse>> getMarsPhotos(@QueryMap Map<String, String> options);
+
+    @GET("/mars-photos/api/v1/rovers/curiosity/photos") Observable<MarsPhotosResponse> getMarsPhotos(@QueryMap Map<String, String> options);
 }

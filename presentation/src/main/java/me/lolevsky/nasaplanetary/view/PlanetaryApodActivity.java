@@ -21,6 +21,7 @@ import me.lolevsky.nasaplanetary.domain.imageloader.IImageLoader;
 import me.lolevsky.nasaplanetary.model.ApodModel;
 import me.lolevsky.nasaplanetary.presenter.PlanetaryApodPresenter;
 import me.lolevsky.nasaplanetary.presenter.Presenter;
+import me.lolevsky.nasaplanetary.widget.ProgressImageView;
 
 public class PlanetaryApodActivity extends BaseActivity<IView, ApodModel> {
     @Inject PlanetaryApodPresenter planetaryApodPresenter;
@@ -33,7 +34,7 @@ public class PlanetaryApodActivity extends BaseActivity<IView, ApodModel> {
     @BindView(R.id.collapsing_toolbar_layout) CollapsingToolbarLayout cllapsingToolbarLayout;
     @BindView(R.id.coordinator_layout) CoordinatorLayout coordinatorLayout;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
-    @BindView(R.id.image_header) ImageView imageView;
+    @BindView(R.id.image_header) ProgressImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +45,18 @@ public class PlanetaryApodActivity extends BaseActivity<IView, ApodModel> {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        intActionBar();
 
         if (savedInstanceState == null) {
             planetaryApodPresenter.loadData();
+        }
+    }
+
+    private void intActionBar(){
+        ActionBar actionBar = getSupportActionBar();
+
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -74,7 +84,7 @@ public class PlanetaryApodActivity extends BaseActivity<IView, ApodModel> {
         explanationTextView.setText(model.getExplanation());
         copyrightTextView.setText(model.getCopyright());
 
-        imageLoader.loadImage(model.getUrl(), imageView);
+        imageLoader.loadImage(model.getUrl(), R.drawable.place_holder, imageView.getImageView(), imageView.getProgressBar());
 
         progressBar.setVisibility(View.GONE);
         coordinatorLayout.setVisibility(View.VISIBLE);
