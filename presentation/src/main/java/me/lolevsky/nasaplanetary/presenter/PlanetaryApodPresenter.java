@@ -23,4 +23,12 @@ public class PlanetaryApodPresenter extends BasePresenter<IView, ApodModel, Apod
     @Override public void pause() {
 
     }
+
+    @Override public void pagingAddNewData(ApodModel newModel) {
+
+    }
+
+    @Override public void onNewPageRequest(int lastItemIndex) {
+
+    }
 }
