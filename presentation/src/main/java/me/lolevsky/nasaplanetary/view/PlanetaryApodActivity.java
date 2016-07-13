@@ -78,6 +78,10 @@ public class PlanetaryApodActivity extends BaseActivity<IView, ApodModel> {
         coordinatorLayout.setVisibility(View.GONE);
     }
 
+    @Override public void onLoadingMore() {
+
+    }
+
     @Override public void onComplete(ApodModel model) {
         setTitle(model.getTitle());
         dateTextView.setText(model.getDate());

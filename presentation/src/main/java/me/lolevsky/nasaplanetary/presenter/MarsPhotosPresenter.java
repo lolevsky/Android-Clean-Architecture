@@ -9,11 +9,15 @@ import me.lolevsky.nasaplanetary.mapper.MarsPhotosModelDataMapper;
 import me.lolevsky.nasaplanetary.model.MarsPhotosModel;
 import me.lolevsky.nasaplanetary.view.IView;
 
-public class MarsPhotosPresenter extends BasePresenter<IView, MarsPhotosModel, MarsPhotosResponse> {
+public class MarsPhotosPresenter extends BasePresenter<IView, MarsPhotosModel, MarsPhotosResponse>{
     @Inject
     public MarsPhotosPresenter(MarsPhotosInteraptor marsPhotosInteraptor,
                                MarsPhotosModelDataMapper marsPhotosModelDataMapper) {
         super(Preconditions.checkNotNull(marsPhotosInteraptor), Preconditions.checkNotNull(marsPhotosModelDataMapper));
+    }
+
+    @Override public void pagingAddNewData(MarsPhotosModel newModel) {
+        model.getMarsPhotos().addAll(newModel.getMarsPhotos());
     }
 
     @Override public void loadData(String... params) {
@@ -26,5 +30,15 @@ public class MarsPhotosPresenter extends BasePresenter<IView, MarsPhotosModel, M
 
     @Override public void pause() {
 
+    }
+
+    @Override public void onNewPageRequest(int lastItemIndex) {
+        synchronized (model){
+            if(model.getLastItemIndex() < lastItemIndex){
+                model.setLastItemIndex(lastItemIndex);
+                model.setPageNumber(model.getPageNumber() + 1);
+                loadData();
+            }
+        }
     }
 }

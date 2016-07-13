@@ -29,4 +29,12 @@ public class MainPresenter extends BasePresenter<IView, MainScreenModule, List<M
     @Override public void pause() {
 
     }
+
+    @Override public void pagingAddNewData(MainScreenModule newModel) {
+
+    }
+
+    @Override public void onNewPageRequest(int lastItemIndex) {
+
+    }
 }
