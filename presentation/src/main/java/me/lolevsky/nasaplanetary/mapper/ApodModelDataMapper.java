@@ -18,8 +18,8 @@ public class ApodModelDataMapper implements IModelDataMapper<ApodResponse, ApodM
         apodModel.setDate(apodResponse.getDate());
         apodModel.setExplanation(apodResponse.getExplanation());
         apodModel.setHdurl(apodResponse.getHdurl());
-        apodModel.setMedia_type(apodResponse.getMedia_type());
-        apodModel.setService_version(apodResponse.getService_version());
+        apodModel.setMedia_type(apodResponse.getMediaType());
+        apodModel.setService_version(apodResponse.getServiceVersion());
         apodModel.setTitle(apodResponse.getTitle());
         apodModel.setUrl(apodResponse.getUrl());
         apodModel.setCopyright(apodResponse.getCopyright());

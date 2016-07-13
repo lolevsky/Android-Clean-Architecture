@@ -12,7 +12,11 @@
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".view.PlanetaryApodActivity"
+
+        <meta-data android:name="me.lolevsky.nasaplanetary.model.GlideConfiguration"
+                   android:value="GlideModule"/>
+
+        <activity android:name=".view.MainActivity"
                 android:configChanges="keyboard|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -20,6 +24,20 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".view.PlanetaryApodActivity"
+                  android:label="@string/astronomy_picture_of_the_day"
+                  android:configChanges="keyboard|orientation">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".view.MainActivity" />
+                </activity>
+        <activity android:name=".view.MarsPhotosActivity"
+                  android:label="@string/mars_rover_photos"
+                  android:configChanges="keyboard|orientation">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".view.MainActivity" />
+                </activity>
     </application>
 
 </manifest>
