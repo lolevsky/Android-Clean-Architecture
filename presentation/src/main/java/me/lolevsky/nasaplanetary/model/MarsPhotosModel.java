@@ -11,6 +11,15 @@ import me.lolevsky.nasaplanetary.model.objects.MarsPhoto;
 public class MarsPhotosModel {
     List<MarsPhoto> marsPhotos = new ArrayList<>();
     int pageNumber = 0;
+    int lastItemIndex = 0;
+
+    public int getLastItemIndex() {
+        return lastItemIndex;
+    }
+
+    public void setLastItemIndex(int lastItemIndex) {
+        this.lastItemIndex = lastItemIndex;
+    }
 
     public int getPageNumber() {
         return pageNumber;

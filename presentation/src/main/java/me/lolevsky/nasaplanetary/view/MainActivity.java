@@ -67,6 +67,10 @@ public class MainActivity extends BaseActivity<IView, MainScreenModule> implemen
 
     }
 
+    @Override public void onLoadingMore() {
+
+    }
+
     @Override public void onComplete(MainScreenModule model) {
         mainViewAdapter.setList(model.getEntityList());
     }
