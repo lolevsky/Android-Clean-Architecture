@@ -22,7 +22,7 @@ public abstract class BasePresenter<T extends IView, M, K> implements Presenter<
         this.modelDataMapper = modelDataMapper;
     }
 
-    @Override public void loadData() {
+    @Override public void loadData(String... params) {
         if (view != null) {
             view.onLoading();
         }
@@ -41,7 +41,7 @@ public abstract class BasePresenter<T extends IView, M, K> implements Presenter<
             @Override public void onNext(K response) {
                 setModel(modelDataMapper.transform(response));
             }
-        });
+        }, params);
     }
 
     @Override public void setView(@NonNull T view) {

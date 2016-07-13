@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Nasa Planetary</string>
+    <string name="astronomy_picture_of_the_day">Astronomy Picture of the Day</string>
+    <string name="mars_rover_photos">Mars Rover Photos</string>
 </resources>
