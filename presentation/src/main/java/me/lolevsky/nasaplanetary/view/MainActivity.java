@@ -1,5 +1,10 @@
 package me.lolevsky.nasaplanetary.view;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -24,8 +29,8 @@ import me.lolevsky.nasaplanetary.model.MainScreenModule;
 import me.lolevsky.nasaplanetary.presenter.MainPresenter;
 import me.lolevsky.nasaplanetary.presenter.Presenter;
 
-public class MainActivity extends BaseActivity<IView, MainScreenModule> implements OnItemClicked {
-    @Inject MainApplication context;
+public class MainActivity extends BaseActivity<MainScreenModule> implements OnItemClicked {
+    @Inject MainApplication application;
     @Inject MainPresenter mainPresenter;
     @Inject IImageLoader imageLoader;
 
@@ -35,6 +40,7 @@ public class MainActivity extends BaseActivity<IView, MainScreenModule> implemen
     @BindView(R.id.image) ImageView imageBackground;
 
     MainViewAdapter mainViewAdapter;
+    Dialog errorDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +53,7 @@ public class MainActivity extends BaseActivity<IView, MainScreenModule> implemen
         setSupportActionBar(toolbar);
 
         mainViewAdapter = new MainViewAdapter(imageLoader, this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(application, LinearLayoutManager.VERTICAL, true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mainViewAdapter);
@@ -56,6 +62,36 @@ public class MainActivity extends BaseActivity<IView, MainScreenModule> implemen
 
         if (savedInstanceState == null) {
             mainPresenter.loadData();
+        }
+
+        checkPlayServices();
+    }
+
+    private boolean checkPlayServices() {
+        final int playServicesStatus = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+        if (playServicesStatus != ConnectionResult.SUCCESS) {
+            if (errorDialog == null || (errorDialog != null && !errorDialog.isShowing())) {
+                //If google play services in not available show an error dialog and return
+                errorDialog = GoogleApiAvailability.getInstance().getErrorDialog(this, playServicesStatus, 0, new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        finish();
+                    }
+                });
+                errorDialog.show();
+            }
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        final int playServicesStatus = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+        if (playServicesStatus == ConnectionResult.SUCCESS) {
+            application.setPersistence();
         }
     }
 
@@ -81,19 +117,21 @@ public class MainActivity extends BaseActivity<IView, MainScreenModule> implemen
     }
 
     public void onItemClicked(int position) {
-        Intent intent = null;
+        if (checkPlayServices()) {
+            Intent intent = null;
 
-        switch (position) {
-            case 0:
-                intent = new Intent(this, PlanetaryApodActivity.class);
-                break;
-            case 1:
-                intent = new Intent(this, MarsPhotosActivity.class);
-                break;
-            default:
-                return;
+            switch (position) {
+                case 0:
+                    intent = new Intent(this, PlanetaryApodActivity.class);
+                    break;
+                case 1:
+                    intent = new Intent(this, MarsPhotosActivity.class);
+                    break;
+                default:
+                    return;
+            }
+
+            startActivity(intent);
         }
-
-        startActivity(intent);
     }
 }

@@ -2,12 +2,13 @@ package me.lolevsky.nasaplanetary.view;
 
 import org.parceler.Parcels;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import me.lolevsky.nasaplanetary.presenter.Presenter;
 
-public abstract class BaseActivity<T extends IView, M> extends AppCompatActivity implements IView<M> {
+public abstract class BaseActivity<M> extends AppCompatActivity implements IView<M> {
     private final String SAVE_INSTANCE_STATE = "SaveInstanceState";
 
     abstract Presenter getPresenter();
@@ -23,6 +24,13 @@ public abstract class BaseActivity<T extends IView, M> extends AppCompatActivity
         if (savedInstanceState != null) {
             getPresenter().setModel(Parcels.unwrap(savedInstanceState.getParcelable(SAVE_INSTANCE_STATE)));
         }
+    }
+
+    @Override public void onStartActivity(Class<?> cls, Bundle bundle) {
+        Intent intent = new Intent(this, cls);
+        intent.putExtras(bundle);
+
+        startActivity(intent);
     }
 
     @Override protected void onStart() {

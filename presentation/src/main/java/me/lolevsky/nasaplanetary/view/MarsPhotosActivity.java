@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -18,16 +17,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.lolevsky.nasaplanetary.MainApplication;
 import me.lolevsky.nasaplanetary.R;
-import me.lolevsky.nasaplanetary.adapters.MainViewAdapter;
 import me.lolevsky.nasaplanetary.adapters.MarsPhotosAdapter;
-import me.lolevsky.nasaplanetary.adapters.OnItemClicked;
 import me.lolevsky.nasaplanetary.domain.imageloader.IImageLoader;
 import me.lolevsky.nasaplanetary.model.MarsPhotosModel;
 import me.lolevsky.nasaplanetary.presenter.MarsPhotosPresenter;
 import me.lolevsky.nasaplanetary.presenter.Presenter;
-import me.lolevsky.nasaplanetary.utils.PageController;
 
-public class MarsPhotosActivity extends BaseActivity<IView, MarsPhotosModel> implements OnItemClicked {
+public class MarsPhotosActivity extends BaseActivity<MarsPhotosModel> {
     @Inject MainApplication context;
     @Inject MarsPhotosPresenter marsPhotosPresenter;
     @Inject IImageLoader imageLoader;
@@ -51,7 +47,7 @@ public class MarsPhotosActivity extends BaseActivity<IView, MarsPhotosModel> imp
         setSupportActionBar(toolbar);
         intActionBar();
 
-        marsPhotosAdapter = new MarsPhotosAdapter(imageLoader, this);
+        marsPhotosAdapter = new MarsPhotosAdapter(imageLoader, marsPhotosPresenter);
         GridLayoutManager layoutManager = new GridLayoutManager(context, 1);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -64,13 +60,14 @@ public class MarsPhotosActivity extends BaseActivity<IView, MarsPhotosModel> imp
         }
     }
 
-    private void intActionBar(){
+    private void intActionBar() {
         ActionBar actionBar = getSupportActionBar();
 
-        if(actionBar != null){
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
+
     @Override Presenter getPresenter() {
         return marsPhotosPresenter;
     }
@@ -85,7 +82,7 @@ public class MarsPhotosActivity extends BaseActivity<IView, MarsPhotosModel> imp
     }
 
     @Override public void onComplete(MarsPhotosModel model) {
-        marsPhotosAdapter.setList(model.getMarsPhotos());
+        marsPhotosAdapter.notifyDataSetChanged();
 
         progressBar.setVisibility(View.GONE);
         progressBarMore.setVisibility(View.GONE);
@@ -98,9 +95,5 @@ public class MarsPhotosActivity extends BaseActivity<IView, MarsPhotosModel> imp
         progressBar.setVisibility(View.GONE);
         progressBarMore.setVisibility(View.GONE);
         coordinatorLayout.setVisibility(View.VISIBLE);
-    }
-
-    @Override public void onItemClicked(int position) {
-
     }
 }

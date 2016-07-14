@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -23,7 +22,7 @@ import me.lolevsky.nasaplanetary.presenter.PlanetaryApodPresenter;
 import me.lolevsky.nasaplanetary.presenter.Presenter;
 import me.lolevsky.nasaplanetary.widget.ProgressImageView;
 
-public class PlanetaryApodActivity extends BaseActivity<IView, ApodModel> {
+public class PlanetaryApodActivity extends BaseActivity<ApodModel> {
     @Inject PlanetaryApodPresenter planetaryApodPresenter;
     @Inject IImageLoader imageLoader;
 
@@ -52,10 +51,10 @@ public class PlanetaryApodActivity extends BaseActivity<IView, ApodModel> {
         }
     }
 
-    private void intActionBar(){
+    private void intActionBar() {
         ActionBar actionBar = getSupportActionBar();
 
-        if(actionBar != null){
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }

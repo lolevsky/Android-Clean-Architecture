@@ -10,6 +10,7 @@ import me.lolevsky.nasaplanetary.model.objects.MarsPhoto;
 @Parcel
 public class MarsPhotosModel {
     List<MarsPhoto> marsPhotos = new ArrayList<>();
+
     int pageNumber = 0;
     int lastItemIndex = 0;
 
