@@ -1,5 +1,9 @@
 package me.lolevsky.nasaplanetary;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.firebase.database.FirebaseDatabase;
+
 import android.app.Application;
 
 import me.lolevsky.nasaplanetary.di.ApplicationComponent;
@@ -12,6 +16,7 @@ import me.lolevsky.nasaplanetary.di.Rx;
 public class MainApplication extends Application {
 
     private ApplicationComponent component;
+    private Boolean isPersistent = false;
 
     @Override public void onCreate() {
         super.onCreate();
@@ -30,5 +35,17 @@ public class MainApplication extends Application {
 
     public ApplicationComponent getApplicationComponent(){
         return component;
+    }
+
+    public void setPersistence() {
+        synchronized (isPersistent) {
+            if (!isPersistent) {
+                final int playServicesStatus = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+                if (playServicesStatus == ConnectionResult.SUCCESS) {
+                    FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+                    isPersistent = true;
+                }
+            }
+        }
     }
 }

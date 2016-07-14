@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="me.lolevsky.nasaplanetary">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
             android:name=".MainApplication"
@@ -13,10 +13,12 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <meta-data android:name="me.lolevsky.nasaplanetary.model.GlideConfiguration"
-                   android:value="GlideModule"/>
+        <meta-data
+                android:name="me.lolevsky.nasaplanetary.model.GlideConfiguration"
+                android:value="GlideModule"/>
 
-        <activity android:name=".view.MainActivity"
+        <activity
+                android:name=".view.MainActivity"
                 android:configChanges="keyboard|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -24,20 +26,30 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.PlanetaryApodActivity"
-                  android:label="@string/astronomy_picture_of_the_day"
-                  android:configChanges="keyboard|orientation">
+        <activity
+                android:name=".view.PlanetaryApodActivity"
+                android:label="@string/astronomy_picture_of_the_day"
+                android:configChanges="keyboard|orientation">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".view.MainActivity" />
-                </activity>
-        <activity android:name=".view.MarsPhotosActivity"
-                  android:label="@string/mars_rover_photos"
-                  android:configChanges="keyboard|orientation">
+                    android:value=".view.MainActivity"/>
+        </activity>
+        <activity
+                android:name=".view.MarsPhotosActivity"
+                android:label="@string/mars_rover_photos"
+                android:configChanges="keyboard|orientation">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".view.MainActivity" />
-                </activity>
+                    android:value=".view.MainActivity"/>
+        </activity>
+        <activity
+                android:name=".view.PhotoCommentsActivity"
+                android:label="@string/mars_rover_photos"
+                android:configChanges="keyboard|orientation">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".view.MarsPhotosActivity"/>
+        </activity>
     </application>
 
 </manifest>

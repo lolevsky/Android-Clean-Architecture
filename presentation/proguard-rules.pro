@@ -15,6 +15,8 @@
 
 -keepattributes *Annotation*
 
+-keep class com.google.firebase.** { *; }
+
 # For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
 -keepclasseswithmembernames class * {
     native <methods>;
