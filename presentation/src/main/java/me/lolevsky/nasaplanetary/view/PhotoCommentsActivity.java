@@ -115,13 +115,15 @@ public class PhotoCommentsActivity extends BaseActivity<MarsPhotoComments> {
             sendButton.setEnabled(false);
             messageInput.setEnabled(false);
 
-            photoCommentPresenter.sendComment(message, new OnCompleteListener() {
-                @Override public void onComplete(@NonNull Task task) {
-                    sendButton.setEnabled(true);
-                    messageInput.setEnabled(true);
-                    messageInput.setText("");
-                }
-            });
+            photoCommentPresenter.sendComment(message);
+        }
+    }
+
+    public void sendComplite(Boolean successful){
+        sendButton.setEnabled(true);
+        messageInput.setEnabled(true);
+        if (successful) {
+            messageInput.setText("");
         }
     }
 }

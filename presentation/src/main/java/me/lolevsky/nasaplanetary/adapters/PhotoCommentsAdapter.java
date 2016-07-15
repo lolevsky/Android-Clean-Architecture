@@ -9,7 +9,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.lolevsky.nasaplanetary.R;
-import me.lolevsky.nasaplanetary.model.objects.PhotoComment;
+import me.lolevsky.nasaplanetary.data.net.request.PhotoComment;
 import me.lolevsky.nasaplanetary.presenter.PhotoCommentPresenter;
 
 public class PhotoCommentsAdapter extends RecyclerView.Adapter<PhotoCommentsAdapter.MyViewHolder> {

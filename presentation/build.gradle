@@ -63,6 +63,6 @@ dependencies {
     compile "com.google.firebase:firebase-database:$rootProject.ext.firebase"
     compile "com.google.firebase:firebase-core:$rootProject.ext.firebase"
     compile "com.google.firebase:firebase-crash:$rootProject.ext.firebase"
-    compile 'org.parceler:parceler-api:1.1.5'
-    apt 'org.parceler:parceler:1.1.5'
+    compile "org.parceler:parceler-api:$rootProject.ext.parceler"
+    apt "org.parceler:parceler:$rootProject.ext.parceler"
 }

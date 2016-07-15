@@ -19,6 +19,7 @@
 
         <activity
                 android:name=".view.MainActivity"
+                android:launchMode="singleTop"
                 android:configChanges="keyboard|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -29,6 +30,7 @@
         <activity
                 android:name=".view.PlanetaryApodActivity"
                 android:label="@string/astronomy_picture_of_the_day"
+                android:launchMode="singleTop"
                 android:configChanges="keyboard|orientation">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -37,6 +39,7 @@
         <activity
                 android:name=".view.MarsPhotosActivity"
                 android:label="@string/mars_rover_photos"
+                android:launchMode="singleTop"
                 android:configChanges="keyboard|orientation">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -45,6 +48,7 @@
         <activity
                 android:name=".view.PhotoCommentsActivity"
                 android:label="@string/mars_rover_photos"
+                android:launchMode="singleTop"
                 android:configChanges="keyboard|orientation">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"

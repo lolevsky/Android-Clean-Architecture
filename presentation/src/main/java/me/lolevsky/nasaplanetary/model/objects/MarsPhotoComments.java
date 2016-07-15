@@ -5,6 +5,8 @@ import org.parceler.Parcel;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.lolevsky.nasaplanetary.data.net.request.PhotoComment;
+
 @Parcel
 public class MarsPhotoComments {
     int photoId;

@@ -1,9 +1,6 @@
 package me.lolevsky.nasaplanetary.adapters;
 
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,19 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.lolevsky.nasaplanetary.R;
 import me.lolevsky.nasaplanetary.domain.imageloader.IImageLoader;
 import me.lolevsky.nasaplanetary.model.objects.MarsPhoto;
-import me.lolevsky.nasaplanetary.model.objects.PhotoComment;
 import me.lolevsky.nasaplanetary.presenter.MarsPhotosPresenter;
 import me.lolevsky.nasaplanetary.widget.ProgressImageView;
+import rx.Subscriber;
 
 public class MarsPhotosAdapter extends RecyclerView.Adapter<MarsPhotosAdapter.MyViewHolder> {
     private IImageLoader imageLoader;
@@ -60,8 +53,8 @@ public class MarsPhotosAdapter extends RecyclerView.Adapter<MarsPhotosAdapter.My
         @BindView(R.id.comments) TextView commentsText;
         @BindView(R.id.image) ProgressImageView image;
         MarsPhoto marsPhoto;
-        List<PhotoComment> comments = new ArrayList<>();
-        ValueEventListener valueEventListener;
+        int comments = 0;
+        Subscriber subscriber;
 
         public MyViewHolder(View view) {
             super(view);
@@ -69,53 +62,50 @@ public class MarsPhotosAdapter extends RecyclerView.Adapter<MarsPhotosAdapter.My
         }
 
         public void setData(MarsPhoto marsPhoto) {
-            if (this.marsPhoto != null && valueEventListener != null) {
-                marsPhotosPresenter.removeMarsPhotoComments(this.marsPhoto.getId(), this.valueEventListener);
-                this.valueEventListener = null;
+            if (this.marsPhoto != null && subscriber != null) {
+                subscriber.unsubscribe();
                 this.marsPhoto = null;
             }
 
             this.marsPhoto = marsPhoto;
 
-            comments.clear();
+            comments = 0;
             title.setText(marsPhoto.getRoverName() + " - " + marsPhoto.getCameraFullName());
 
             image.getProgressBar().setVisibility(View.VISIBLE);
             imageLoader.loadImage(marsPhoto.getImgSrc(), R.drawable.place_holder, image.getImageView(), image
                     .getProgressBar());
 
-            valueEventListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.getKey().equals(String.valueOf(MyViewHolder.this.marsPhoto.getId()))) {
-                        GenericTypeIndicator<Map<String, PhotoComment>> t = new GenericTypeIndicator<Map<String, PhotoComment>>
-                                () {
-                        };
+            subscriber = new Subscriber<DataSnapshot>() {
 
-                        comments.clear();
-                        Map<String, PhotoComment> stringList = dataSnapshot.getValue(t);
+                @Override public void onCompleted() {
 
-                        if (stringList != null && stringList.size() > 0) {
-                            comments.addAll(stringList.values());
-                        }
-
-                        updateCommentsNumber();
-                    }
                 }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+                @Override public void onError(Throwable e) {
 
+                }
+
+                @Override public void onNext(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getKey().equals(String.valueOf(MyViewHolder.this.marsPhoto.getId()))) {
+                        comments = (int)dataSnapshot.getChildrenCount();
+                        updateCommentsNumber();
+                    }
                 }
             };
 
             updateCommentsNumber();
-            marsPhotosPresenter.getMarsPhotoComments(marsPhoto.getId(), valueEventListener);
+            marsPhotosPresenter.getComments(subscriber, String.valueOf(marsPhoto.getId()));
         }
 
         private void updateCommentsNumber() {
-            commentsText.setText(String.format(commentsText.getContext().getString(R.string.number_of_comments),
-                    comments.size()));
+            if(comments == 0){
+                commentsText.setText(R.string.no_comments);
+            }else{
+                commentsText.setText(
+                        commentsText.getContext().getResources()
+                                    .getQuantityString(R.plurals.number_of_comments, comments, comments));
+            }
         }
 
         @OnClick(R.id.comments)

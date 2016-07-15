@@ -2,5 +2,12 @@
     <string name="app_name">Nasa Planetary</string>
     <string name="astronomy_picture_of_the_day">Astronomy Picture of the Day</string>
     <string name="mars_rover_photos">Mars Rover Photos</string>
-    <string name="number_of_comments">%1$s Comments</string>
+    <string name="no_comments">No comment</string>
+    <string name="zero_comments">Comment</string>
+    <string name="many_comments">%1$s Comments</string>
+
+    <plurals name="number_of_comments">
+        <item quantity="one">@string/zero_comments</item>
+        <item quantity="other">@string/many_comments</item>
+    </plurals>
 </resources>

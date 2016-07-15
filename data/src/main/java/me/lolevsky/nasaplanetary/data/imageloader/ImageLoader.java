@@ -2,12 +2,11 @@ package me.lolevsky.nasaplanetary.data.imageloader;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.MemoryCategory;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
 import android.app.Application;
-import android.graphics.Bitmap;
-import android.support.annotation.IdRes;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -19,10 +18,12 @@ public class ImageLoader implements IImageLoader {
 
     public ImageLoader(Application context) {
         this.context = context;
-        Glide.get(context).setMemoryCategory(MemoryCategory.HIGH);
+        Glide.get(context).setMemoryCategory(MemoryCategory.LOW);
     }
 
     @Override public void loadImage(String url, ImageView holder) {
+        clear(holder);
+
         Glide.with(context)
              .load(url)
              .centerCrop()
@@ -32,20 +33,21 @@ public class ImageLoader implements IImageLoader {
 
     @Override public void loadImage(String url, int resourceIdPlaceHolder, ImageView holder, final ProgressBar
                                     progressBar) {
+        clear(holder);
+
         Glide.with(context)
              .load(url)
-             .asBitmap()
              .centerCrop()
              .placeholder(resourceIdPlaceHolder)
-             .listener(new RequestListener<String, Bitmap>() {
-                 @Override public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
+             .listener(new RequestListener<String, GlideDrawable>() {
+                 @Override public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                      if(progressBar != null){
                          progressBar.setVisibility(View.GONE);
                      }
                      return false;
                  }
 
-                 @Override public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                 @Override public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                      if(progressBar != null){
                          progressBar.setVisibility(View.GONE);
                      }
@@ -56,10 +58,18 @@ public class ImageLoader implements IImageLoader {
     }
 
     @Override public void loadImage(int resourceId, ImageView holder) {
+        clear(holder);
+
         Glide.with(context)
              .load(resourceId)
              .centerCrop()
              .crossFade()
              .into(holder);
+    }
+
+    private void clear(ImageView holder){
+        Glide.clear(holder);
+        // remove the placeholder (optional); read comments below
+        holder.setImageDrawable(null);
     }
 }

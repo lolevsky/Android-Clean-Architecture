@@ -1,4 +1,4 @@
-package me.lolevsky.nasaplanetary.model.objects;
+package me.lolevsky.nasaplanetary.data.net.request;
 
 import org.parceler.Parcel;
 

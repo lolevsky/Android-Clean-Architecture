@@ -1,36 +1,31 @@
 package me.lolevsky.nasaplanetary.presenter;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
 import android.os.Bundle;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Observable;
 
 import javax.inject.Inject;
 
 import dagger.internal.Preconditions;
 import me.lolevsky.nasaplanetary.data.net.result.MarsPhotosResponse;
+import me.lolevsky.nasaplanetary.domain.interactor.CommentsInteraptor;
 import me.lolevsky.nasaplanetary.domain.interactor.MarsPhotosInteraptor;
-import me.lolevsky.nasaplanetary.domain.storage.DatabaseNames;
+import me.lolevsky.nasaplanetary.domain.repository.IComments;
 import me.lolevsky.nasaplanetary.mapper.MarsPhotosModelDataMapper;
 import me.lolevsky.nasaplanetary.model.MarsPhotosModel;
 import me.lolevsky.nasaplanetary.view.IView;
 import me.lolevsky.nasaplanetary.view.PhotoCommentsActivity;
+import rx.Subscriber;
 
 public class MarsPhotosPresenter extends BasePresenter<IView, MarsPhotosModel, MarsPhotosResponse> {
-    DatabaseReference databaseReference;
-    Map<Integer, Query> queryMap = new HashMap<>();
+    CommentsInteraptor comments;
 
     @Inject
     public MarsPhotosPresenter(MarsPhotosInteraptor marsPhotosInteraptor,
-                               MarsPhotosModelDataMapper marsPhotosModelDataMapper) {
+                               MarsPhotosModelDataMapper marsPhotosModelDataMapper,
+                               CommentsInteraptor comments) {
         super(Preconditions.checkNotNull(marsPhotosInteraptor), Preconditions.checkNotNull(marsPhotosModelDataMapper));
-
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        this.comments = Preconditions.checkNotNull(comments);
     }
 
     @Override public void pagingAddNewData(MarsPhotosModel newModel) {
@@ -68,25 +63,7 @@ public class MarsPhotosPresenter extends BasePresenter<IView, MarsPhotosModel, M
         }
     }
 
-    public void removeMarsPhotoComments(int photoId, ValueEventListener valueEventListener) {
-        synchronized (queryMap) {
-            if (queryMap.containsKey(photoId)) {
-                Query query = queryMap.get(photoId);
-                query.removeEventListener(valueEventListener);
-
-                queryMap.remove(photoId);
-            }
-        }
-    }
-
-    public void getMarsPhotoComments(int photoId, ValueEventListener valueEventListener) {
-        synchronized (queryMap) {
-            if (!queryMap.containsKey(photoId)) {
-                Query query = databaseReference.child(DatabaseNames.TABLE_COMMENTS).child(String.valueOf(photoId));
-                query.addValueEventListener(valueEventListener);
-
-                queryMap.put(photoId, query);
-            }
-        }
+    public void getComments(Subscriber subscriber, String photoId){
+        comments.execute(subscriber, photoId);
     }
 }

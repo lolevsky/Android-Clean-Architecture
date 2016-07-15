@@ -4,9 +4,11 @@ import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
+import me.lolevsky.nasaplanetary.domain.interactor.CommentsInteraptor;
 import me.lolevsky.nasaplanetary.domain.interactor.MainScreenInterapter;
 import me.lolevsky.nasaplanetary.domain.interactor.MarsPhotosInteraptor;
 import me.lolevsky.nasaplanetary.domain.interactor.PlanetaryApodInteraptor;
+import me.lolevsky.nasaplanetary.domain.repository.IComments;
 import me.lolevsky.nasaplanetary.domain.repository.IMarsPhotos;
 import me.lolevsky.nasaplanetary.domain.repository.IPlanetaryApod;
 import rx.Scheduler;
@@ -28,5 +30,11 @@ public class DomainModule {
                                                                      @Named(Rx.MAIN) Scheduler mainScheduler,
                                                                      @Named(Rx.IO) Scheduler ioScheduler) {
         return new PlanetaryApodInteraptor(planetaryApod, mainScheduler, ioScheduler);
+    }
+
+    @Provides CommentsInteraptor provideCommentsInteraptor(IComments comments,
+                                                           @Named(Rx.MAIN) Scheduler mainScheduler,
+                                                           @Named(Rx.IO) Scheduler ioScheduler) {
+        return new CommentsInteraptor(comments, mainScheduler, ioScheduler);
     }
 }

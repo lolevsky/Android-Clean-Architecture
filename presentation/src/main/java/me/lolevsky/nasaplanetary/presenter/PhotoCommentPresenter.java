@@ -1,43 +1,34 @@
 package me.lolevsky.nasaplanetary.presenter;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.inject.Inject;
 
-import me.lolevsky.nasaplanetary.domain.storage.DatabaseNames;
+import dagger.internal.Preconditions;
+import me.lolevsky.nasaplanetary.domain.interactor.CommentsInteraptor;
 import me.lolevsky.nasaplanetary.model.objects.MarsPhotoComments;
-import me.lolevsky.nasaplanetary.model.objects.PhotoComment;
-import me.lolevsky.nasaplanetary.view.IView;
+import me.lolevsky.nasaplanetary.data.net.request.PhotoComment;
+import me.lolevsky.nasaplanetary.view.PhotoCommentsActivity;
+import rx.Subscriber;
 
-public class PhotoCommentPresenter implements Presenter<IView, MarsPhotoComments> {
-    DatabaseReference databaseReference;
-
-    IView view;
+public class PhotoCommentPresenter implements Presenter<PhotoCommentsActivity, MarsPhotoComments> {
+    PhotoCommentsActivity view;
     MarsPhotoComments model;
+    CommentsInteraptor comments;
 
     @Inject
-    public PhotoCommentPresenter() {
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+    public PhotoCommentPresenter(CommentsInteraptor comments) {
+        this.comments = Preconditions.checkNotNull(comments);
     }
-
 
     @Override public void resume() {
 
@@ -49,17 +40,25 @@ public class PhotoCommentPresenter implements Presenter<IView, MarsPhotoComments
 
     @Override public void destroy() {
         view = null;
+        comments.unsubscribe();
     }
 
     @Override public void loadData(String... params) {
         model = new MarsPhotoComments();
         model.setPhotoId(Integer.valueOf(params[0]));
 
-        Query query = databaseReference.child(DatabaseNames.TABLE_COMMENTS).child(params[0]).orderByChild("date");
+        comments.execute(new Subscriber<DataSnapshot>() {
+            @Override public void onCompleted() {
 
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            }
+
+            @Override public void onError(Throwable e) {
+                if (view != null) {
+                    view.onError(e.getMessage());
+                }
+            }
+
+            @Override public void onNext(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<Map<String, PhotoComment>> t = new GenericTypeIndicator<Map<String, PhotoComment>>() {
                 };
 
@@ -81,17 +80,10 @@ public class PhotoCommentPresenter implements Presenter<IView, MarsPhotoComments
                     view.onComplete(model);
                 }
             }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                if (view != null) {
-                    view.onError(databaseError.getMessage());
-                }
-            }
-        });
+        }, params[0]);
     }
 
-    @Override public void setView(@NonNull IView view) {
+    @Override public void setView(@NonNull PhotoCommentsActivity view) {
         this.view = view;
     }
 
@@ -103,11 +95,20 @@ public class PhotoCommentPresenter implements Presenter<IView, MarsPhotoComments
         this.model = model;
     }
 
-    public void sendComment(String message, OnCompleteListener onCompleteListener) {
-        databaseReference.child(DatabaseNames.TABLE_COMMENTS)
-                         .child(String.valueOf(model.getPhotoId()))
-                         .push()
-                         .setValue(new PhotoComment(Calendar.getInstance().getTime(), message))
-                         .addOnCompleteListener(onCompleteListener);
+    public void sendComment(String message) {
+        comments.sendComment(String.valueOf(model.getPhotoId()), message).subscribe(new Subscriber<Boolean>() {
+            @Override public void onCompleted() {
+
+            }
+
+            @Override public void onError(Throwable e) {
+                view.sendComplite(false);
+                view.onError(e.getMessage());
+            }
+
+            @Override public void onNext(Boolean o) {
+                view.sendComplite(o);
+            }
+        });
     }
 }

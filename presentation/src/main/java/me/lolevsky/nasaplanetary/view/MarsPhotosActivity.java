@@ -19,6 +19,7 @@ import me.lolevsky.nasaplanetary.MainApplication;
 import me.lolevsky.nasaplanetary.R;
 import me.lolevsky.nasaplanetary.adapters.MarsPhotosAdapter;
 import me.lolevsky.nasaplanetary.domain.imageloader.IImageLoader;
+import me.lolevsky.nasaplanetary.domain.repository.IComments;
 import me.lolevsky.nasaplanetary.model.MarsPhotosModel;
 import me.lolevsky.nasaplanetary.presenter.MarsPhotosPresenter;
 import me.lolevsky.nasaplanetary.presenter.Presenter;
