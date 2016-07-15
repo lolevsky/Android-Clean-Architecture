@@ -1,7 +1,13 @@
 package me.lolevsky.nasaplanetary.di;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import android.app.Application;
 
 import javax.inject.Singleton;
 
@@ -19,6 +25,8 @@ import me.lolevsky.nasaplanetary.domain.repository.IMarsPhotos;
 import me.lolevsky.nasaplanetary.domain.tracking.ITracking;
 import me.lolevsky.nasaplanetary.data.tracking.Tracking;
 import me.lolevsky.nasaplanetary.domain.repository.IPlanetaryApod;
+import rx.Observable;
+import rx.functions.Func1;
 
 @Module
 public class DataModule {
@@ -27,11 +35,6 @@ public class DataModule {
 
     public DataModule(MainApplication mainApplication) {
         this.application = mainApplication;
-    }
-
-    @Singleton
-    @Provides ITracking provideTracking() {
-        return new Tracking();
     }
 
     @Provides MainApplication provideMainApplication() {
@@ -46,9 +49,34 @@ public class DataModule {
         return new MarsPhotos(nasaService);
     }
 
-    @Provides IComments provideComments() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        return new Comments(databaseReference);
+    @Singleton
+    @Provides ITracking provideTracking(MainApplication application) {
+        int playServicesStatus = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(application);
+        if (playServicesStatus == ConnectionResult.SUCCESS) {
+            return new Tracking(FirebaseAnalytics.getInstance(application));
+        } else {
+            return new ITracking() {
+
+            };
+        }
+    }
+
+    @Provides IComments provideComments(MainApplication application) {
+        int playServicesStatus = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(application);
+        if (playServicesStatus == ConnectionResult.SUCCESS) {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            return new Comments(databaseReference);
+        }else{
+            return new IComments() {
+                @Override public Observable getComments(String photoId) {
+                    return Observable.error(new RuntimeException("FireBase not supported"));
+                }
+
+                @Override public Observable sendComment(String photoId, String message) {
+                    return Observable.error(new RuntimeException("FireBase not supported"));
+                }
+            };
+        }
     }
 
     @Singleton

@@ -3,8 +3,6 @@ package me.lolevsky.nasaplanetary.view;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -40,7 +38,6 @@ public class MainActivity extends BaseActivity<MainScreenModule> implements OnIt
     @BindView(R.id.image) ImageView imageBackground;
 
     MainViewAdapter mainViewAdapter;
-    Dialog errorDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,25 +62,6 @@ public class MainActivity extends BaseActivity<MainScreenModule> implements OnIt
         }
 
         checkPlayServices();
-    }
-
-    private boolean checkPlayServices() {
-        final int playServicesStatus = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
-        if (playServicesStatus != ConnectionResult.SUCCESS) {
-            if (errorDialog == null || (errorDialog != null && !errorDialog.isShowing())) {
-                //If google play services in not available show an error dialog and return
-                errorDialog = GoogleApiAvailability.getInstance().getErrorDialog(this, playServicesStatus, 0, new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialogInterface) {
-                        finish();
-                    }
-                });
-                errorDialog.show();
-            }
-            return false;
-        }
-
-        return true;
     }
 
     @Override
@@ -117,21 +95,20 @@ public class MainActivity extends BaseActivity<MainScreenModule> implements OnIt
     }
 
     public void onItemClicked(int position) {
-        if (checkPlayServices()) {
-            Intent intent = null;
+        Intent intent = null;
 
-            switch (position) {
-                case 0:
-                    intent = new Intent(this, PlanetaryApodActivity.class);
-                    break;
-                case 1:
-                    intent = new Intent(this, MarsPhotosActivity.class);
-                    break;
-                default:
-                    return;
-            }
-
-            startActivity(intent);
+        switch (position) {
+            case 0:
+                intent = new Intent(this, PlanetaryApodActivity.class);
+                break;
+            case 1:
+                intent = new Intent(this, MarsPhotosActivity.class);
+                break;
+            default:
+                return;
         }
+
+        startActivity(intent);
+
     }
 }

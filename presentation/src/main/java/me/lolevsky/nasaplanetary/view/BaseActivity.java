@@ -1,7 +1,13 @@
 package me.lolevsky.nasaplanetary.view;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+
 import org.parceler.Parcels;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +16,8 @@ import me.lolevsky.nasaplanetary.presenter.Presenter;
 
 public abstract class BaseActivity<M> extends AppCompatActivity implements IView<M> {
     private final String SAVE_INSTANCE_STATE = "SaveInstanceState";
+
+    Dialog errorDialog;
 
     abstract Presenter getPresenter();
 
@@ -56,5 +64,24 @@ public abstract class BaseActivity<M> extends AppCompatActivity implements IView
     @Override protected void onDestroy() {
         super.onDestroy();
         getPresenter().destroy();
+    }
+
+    protected boolean checkPlayServices() {
+        final int playServicesStatus = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+        if (playServicesStatus != ConnectionResult.SUCCESS) {
+            if (errorDialog == null || (errorDialog != null && !errorDialog.isShowing())) {
+                //If google play services in not available show an error dialog and return
+                errorDialog = GoogleApiAvailability.getInstance().getErrorDialog(this, playServicesStatus, 0, new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        finish();
+                    }
+                });
+                errorDialog.show();
+            }
+            return false;
+        }
+
+        return true;
     }
 }

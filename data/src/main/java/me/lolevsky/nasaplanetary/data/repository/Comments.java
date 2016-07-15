@@ -61,7 +61,6 @@ public class Comments implements IComments {
     //example from https://gist.github.com/gsoltis/86210e3259dcc6998801
     private Observable<DataSnapshot> observe(final Query ref) {
         return Observable.create(new Observable.OnSubscribe<DataSnapshot>() {
-
             @Override
             public void call(final Subscriber<? super DataSnapshot> subscriber) {
                 final ValueEventListener listener = ref.addValueEventListener(new ValueEventListener() {
