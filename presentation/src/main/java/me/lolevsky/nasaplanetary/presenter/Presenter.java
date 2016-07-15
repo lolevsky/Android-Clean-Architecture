@@ -2,6 +2,8 @@ package me.lolevsky.nasaplanetary.presenter;
 
 import android.support.annotation.NonNull;
 
+import me.lolevsky.nasaplanetary.domain.tracking.ITracking;
+
 public interface Presenter<T, M> {
     void resume();
     void pause();
@@ -10,5 +12,6 @@ public interface Presenter<T, M> {
     void setView(@NonNull T view);
     M getModel();
     void setModel(M model);
+    ITracking getTracking();
 
 }

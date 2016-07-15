@@ -87,7 +87,7 @@ public class PlanetaryApodActivity extends BaseActivity<ApodModel> {
         explanationTextView.setText(model.getExplanation());
         copyrightTextView.setText(model.getCopyright());
 
-        imageLoader.loadImage(model.getUrl(), R.drawable.place_holder, imageView.getImageView(), imageView.getProgressBar());
+        imageLoader.loadImage(model.getUrl(), R.drawable.back_main, imageView.getImageView(), imageView.getProgressBar());
 
         progressBar.setVisibility(View.GONE);
         coordinatorLayout.setVisibility(View.VISIBLE);

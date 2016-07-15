@@ -57,6 +57,21 @@ public class DataModule {
         } else {
             return new ITracking() {
 
+                @Override public void LogEventScreen(String eventName) {
+
+                }
+
+                @Override public void LogEventClick(String eventName) {
+
+                }
+
+                @Override public void LogEvent(String category, String eventName) {
+
+                }
+
+                @Override public void LogException(String exception) {
+
+                }
             };
         }
     }

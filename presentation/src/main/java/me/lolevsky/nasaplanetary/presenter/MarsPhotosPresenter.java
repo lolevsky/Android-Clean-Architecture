@@ -11,6 +11,7 @@ import me.lolevsky.nasaplanetary.data.net.result.MarsPhotosResponse;
 import me.lolevsky.nasaplanetary.domain.interactor.CommentsInteraptor;
 import me.lolevsky.nasaplanetary.domain.interactor.MarsPhotosInteraptor;
 import me.lolevsky.nasaplanetary.domain.repository.IComments;
+import me.lolevsky.nasaplanetary.domain.tracking.ITracking;
 import me.lolevsky.nasaplanetary.mapper.MarsPhotosModelDataMapper;
 import me.lolevsky.nasaplanetary.model.MarsPhotosModel;
 import me.lolevsky.nasaplanetary.view.IView;
@@ -23,9 +24,13 @@ public class MarsPhotosPresenter extends BasePresenter<IView, MarsPhotosModel, M
     @Inject
     public MarsPhotosPresenter(MarsPhotosInteraptor marsPhotosInteraptor,
                                MarsPhotosModelDataMapper marsPhotosModelDataMapper,
-                               CommentsInteraptor comments) {
-        super(Preconditions.checkNotNull(marsPhotosInteraptor), Preconditions.checkNotNull(marsPhotosModelDataMapper));
+                               CommentsInteraptor comments,
+                               ITracking tracking) {
+        super(Preconditions.checkNotNull(marsPhotosInteraptor), Preconditions.checkNotNull(marsPhotosModelDataMapper)
+                , Preconditions.checkNotNull(tracking));
         this.comments = Preconditions.checkNotNull(comments);
+
+        tracking.LogEventScreen("MarsPhotosScreen");
     }
 
     @Override public void pagingAddNewData(MarsPhotosModel newModel) {
@@ -55,6 +60,8 @@ public class MarsPhotosPresenter extends BasePresenter<IView, MarsPhotosModel, M
     }
 
     public void onCommentClick(int photoId) {
+        getTracking().LogEventClick("onCommentClick - " + photoId);
+
         if (view != null) {
             Bundle bundle = new Bundle();
             bundle.putString(PhotoCommentsActivity.EXTRA_PHOTO_ID, String.valueOf(photoId));

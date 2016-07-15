@@ -14,9 +14,10 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import dagger.internal.Preconditions;
-import me.lolevsky.nasaplanetary.domain.interactor.CommentsInteraptor;
-import me.lolevsky.nasaplanetary.model.objects.MarsPhotoComments;
 import me.lolevsky.nasaplanetary.data.net.request.PhotoComment;
+import me.lolevsky.nasaplanetary.domain.interactor.CommentsInteraptor;
+import me.lolevsky.nasaplanetary.domain.tracking.ITracking;
+import me.lolevsky.nasaplanetary.model.objects.MarsPhotoComments;
 import me.lolevsky.nasaplanetary.view.PhotoCommentsActivity;
 import rx.Subscriber;
 
@@ -24,10 +25,15 @@ public class PhotoCommentPresenter implements Presenter<PhotoCommentsActivity, M
     PhotoCommentsActivity view;
     MarsPhotoComments model;
     CommentsInteraptor comments;
+    ITracking tracking;
 
     @Inject
-    public PhotoCommentPresenter(CommentsInteraptor comments) {
+    public PhotoCommentPresenter(CommentsInteraptor comments,
+                                 ITracking tracking) {
         this.comments = Preconditions.checkNotNull(comments);
+        this.tracking = Preconditions.checkNotNull(tracking);
+
+        tracking.LogEventScreen("PhotoCommentScreen");
     }
 
     @Override public void resume() {
@@ -76,7 +82,7 @@ public class PhotoCommentPresenter implements Presenter<PhotoCommentsActivity, M
                     model.setComments(comments);
                 }
 
-                if(view != null){
+                if (view != null) {
                     view.onComplete(model);
                 }
             }
@@ -96,6 +102,8 @@ public class PhotoCommentPresenter implements Presenter<PhotoCommentsActivity, M
     }
 
     public void sendComment(String message) {
+        tracking.LogEventClick("sendComment");
+
         comments.sendComment(String.valueOf(model.getPhotoId()), message).subscribe(new Subscriber<Boolean>() {
             @Override public void onCompleted() {
 
@@ -110,5 +118,9 @@ public class PhotoCommentPresenter implements Presenter<PhotoCommentsActivity, M
                 view.sendComplite(o);
             }
         });
+    }
+
+    @Override public ITracking getTracking() {
+        return tracking;
     }
 }

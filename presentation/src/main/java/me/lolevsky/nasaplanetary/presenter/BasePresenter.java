@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 
 import me.lolevsky.nasaplanetary.domain.interactor.BaseInteractor;
+import me.lolevsky.nasaplanetary.domain.tracking.ITracking;
 import me.lolevsky.nasaplanetary.mapper.IModelDataMapper;
 import me.lolevsky.nasaplanetary.utils.PageController;
 import me.lolevsky.nasaplanetary.view.IView;
@@ -16,14 +17,16 @@ public abstract class BasePresenter<T extends IView, M, K> implements Presenter<
     IModelDataMapper<K, M> modelDataMapper;
     boolean isSupportPaging = false;
     PageController pageController;
+    ITracking tracking;
 
     BasePresenter() {
 
     }
 
-    public BasePresenter(BaseInteractor interaptor, IModelDataMapper modelDataMapper) {
+    public BasePresenter(BaseInteractor interaptor, IModelDataMapper modelDataMapper, ITracking tracking) {
         this.interaptor = interaptor;
         this.modelDataMapper = modelDataMapper;
+        this.tracking = tracking;
     }
 
     public PageController getPageController() {
@@ -94,5 +97,9 @@ public abstract class BasePresenter<T extends IView, M, K> implements Presenter<
     @Override public void destroy() {
         interaptor.unsubscribe();
         view = null;
+    }
+
+    @Override public ITracking getTracking() {
+        return tracking;
     }
 }

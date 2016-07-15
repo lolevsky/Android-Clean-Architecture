@@ -99,9 +99,13 @@ public class MainActivity extends BaseActivity<MainScreenModule> implements OnIt
 
         switch (position) {
             case 0:
+                getPresenter().getTracking().LogEventClick("Open PlanetaryApodActivity");
+
                 intent = new Intent(this, PlanetaryApodActivity.class);
                 break;
             case 1:
+                getPresenter().getTracking().LogEventClick("Open MarsPhotosActivity");
+
                 intent = new Intent(this, MarsPhotosActivity.class);
                 break;
             default:
