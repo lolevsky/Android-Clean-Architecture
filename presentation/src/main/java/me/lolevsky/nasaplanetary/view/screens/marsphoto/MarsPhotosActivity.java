@@ -1,14 +1,15 @@
-package me.lolevsky.nasaplanetary.view;
+package me.lolevsky.nasaplanetary.view.screens.marsphoto;
 
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -16,38 +17,46 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.lolevsky.nasaplanetary.MainApplication;
 import me.lolevsky.nasaplanetary.R;
+import me.lolevsky.nasaplanetary.adapters.MarsPhotosAdapter;
 import me.lolevsky.nasaplanetary.domain.imageloader.IImageLoader;
-import me.lolevsky.nasaplanetary.model.ApodModel;
-import me.lolevsky.nasaplanetary.presenter.PlanetaryApodPresenter;
-import me.lolevsky.nasaplanetary.presenter.Presenter;
-import me.lolevsky.nasaplanetary.widget.ProgressImageView;
+import me.lolevsky.nasaplanetary.model.MarsPhotosModel;
+import me.lolevsky.nasaplanetary.view.presenter.Presenter;
+import me.lolevsky.nasaplanetary.view.BaseActivity;
 
-public class PlanetaryApodActivity extends BaseActivity<ApodModel> {
-    @Inject PlanetaryApodPresenter planetaryApodPresenter;
+public class MarsPhotosActivity extends BaseActivity<MarsPhotosModel> {
+    @Inject MainApplication context;
+    @Inject MarsPhotosPresenter marsPhotosPresenter;
     @Inject IImageLoader imageLoader;
 
-    @BindView(R.id.date) TextView dateTextView;
-    @BindView(R.id.explanation) TextView explanationTextView;
-    @BindView(R.id.copyright) TextView copyrightTextView;
-    @BindView(R.id.collapsible_toolbar) Toolbar toolbar;
-    @BindView(R.id.collapsing_toolbar_layout) CollapsingToolbarLayout cllapsingToolbarLayout;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.recycler) RecyclerView recyclerView;
     @BindView(R.id.coordinator_layout) CoordinatorLayout coordinatorLayout;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
-    @BindView(R.id.image_header) ProgressImageView imageView;
+    @BindView(R.id.progress_bar_more) ProgressBar progressBarMore;
+
+    MarsPhotosAdapter marsPhotosAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MainApplication) getApplication()).getApplicationComponent().inject(this);
 
-        setContentView(R.layout.activity_planetary_apod);
+        setContentView(R.layout.activity_mars_photos);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
         intActionBar();
 
+        marsPhotosAdapter = new MarsPhotosAdapter(imageLoader, marsPhotosPresenter);
+        GridLayoutManager layoutManager = new GridLayoutManager(context, 1);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(marsPhotosAdapter);
+
+        marsPhotosPresenter.initPageController(recyclerView);
+
         if (savedInstanceState == null) {
-            planetaryApodPresenter.loadData();
+            marsPhotosPresenter.loadData();
         }
     }
 
@@ -59,17 +68,8 @@ public class PlanetaryApodActivity extends BaseActivity<ApodModel> {
         }
     }
 
-    private void setTitle(String title) {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(title);
-        }
-
-        cllapsingToolbarLayout.setTitle(title);
-    }
-
-    @Override Presenter getPresenter() {
-        return planetaryApodPresenter;
+    @Override protected Presenter getPresenter() {
+        return marsPhotosPresenter;
     }
 
     @Override public void onLoading() {
@@ -78,18 +78,14 @@ public class PlanetaryApodActivity extends BaseActivity<ApodModel> {
     }
 
     @Override public void onLoadingMore() {
-
+        progressBarMore.setVisibility(View.VISIBLE);
     }
 
-    @Override public void onComplete(ApodModel model) {
-        setTitle(model.getTitle());
-        dateTextView.setText(model.getDate());
-        explanationTextView.setText(model.getExplanation());
-        copyrightTextView.setText(model.getCopyright());
-
-        imageLoader.loadImage(model.getUrl(), R.drawable.back_main, imageView.getImageView(), imageView.getProgressBar());
+    @Override public void onComplete(MarsPhotosModel model) {
+        marsPhotosAdapter.notifyDataSetChanged();
 
         progressBar.setVisibility(View.GONE);
+        progressBarMore.setVisibility(View.GONE);
         coordinatorLayout.setVisibility(View.VISIBLE);
     }
 
@@ -97,6 +93,7 @@ public class PlanetaryApodActivity extends BaseActivity<ApodModel> {
         Snackbar.make(coordinatorLayout, error, Snackbar.LENGTH_SHORT).show();
 
         progressBar.setVisibility(View.GONE);
+        progressBarMore.setVisibility(View.GONE);
         coordinatorLayout.setVisibility(View.VISIBLE);
     }
 }

@@ -1,4 +1,4 @@
-package me.lolevsky.nasaplanetary.presenter;
+package me.lolevsky.nasaplanetary.view.screens.planetoryapod;
 
 import javax.inject.Inject;
 
@@ -8,6 +8,7 @@ import me.lolevsky.nasaplanetary.domain.interactor.PlanetaryApodInteraptor;
 import me.lolevsky.nasaplanetary.domain.tracking.ITracking;
 import me.lolevsky.nasaplanetary.mapper.ApodModelDataMapper;
 import me.lolevsky.nasaplanetary.model.ApodModel;
+import me.lolevsky.nasaplanetary.view.presenter.BasePresenter;
 import me.lolevsky.nasaplanetary.view.IView;
 
 public class PlanetaryApodPresenter extends BasePresenter<IView, ApodModel, ApodResponse> {

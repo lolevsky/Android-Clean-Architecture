@@ -18,7 +18,7 @@
                 android:value="GlideModule"/>
 
         <activity
-                android:name=".view.MainActivity"
+                android:name=".view.screens.main.MainActivity"
                 android:launchMode="singleTop"
                 android:configChanges="keyboard|orientation">
             <intent-filter>
@@ -28,31 +28,31 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".view.PlanetaryApodActivity"
+                android:name=".view.screens.planetoryapod.PlanetaryApodActivity"
                 android:label="@string/astronomy_picture_of_the_day"
                 android:launchMode="singleTop"
                 android:configChanges="keyboard|orientation">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".view.MainActivity"/>
+                    android:value=".view.screens.main.MainActivity"/>
         </activity>
         <activity
-                android:name=".view.MarsPhotosActivity"
+                android:name=".view.screens.marsphoto.MarsPhotosActivity"
                 android:label="@string/mars_rover_photos"
                 android:launchMode="singleTop"
                 android:configChanges="keyboard|orientation">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".view.MainActivity"/>
+                    android:value=".view.screens.main.MainActivity"/>
         </activity>
         <activity
-                android:name=".view.PhotoCommentsActivity"
+                android:name=".view.screens.photocomment.PhotoCommentsActivity"
                 android:label="@string/mars_rover_photos"
                 android:launchMode="singleTop"
                 android:configChanges="keyboard|orientation">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".view.MarsPhotosActivity"/>
+                    android:value=".view.screens.marsphoto.MarsPhotosActivity"/>
         </activity>
     </application>
 

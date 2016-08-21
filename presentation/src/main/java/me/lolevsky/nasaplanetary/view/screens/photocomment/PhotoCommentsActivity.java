@@ -1,10 +1,6 @@
-package me.lolevsky.nasaplanetary.view;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+package me.lolevsky.nasaplanetary.view.screens.photocomment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -24,8 +20,8 @@ import me.lolevsky.nasaplanetary.MainApplication;
 import me.lolevsky.nasaplanetary.R;
 import me.lolevsky.nasaplanetary.adapters.PhotoCommentsAdapter;
 import me.lolevsky.nasaplanetary.model.objects.MarsPhotoComments;
-import me.lolevsky.nasaplanetary.presenter.PhotoCommentPresenter;
-import me.lolevsky.nasaplanetary.presenter.Presenter;
+import me.lolevsky.nasaplanetary.view.presenter.Presenter;
+import me.lolevsky.nasaplanetary.view.BaseActivity;
 
 public class PhotoCommentsActivity extends BaseActivity<MarsPhotoComments> {
     public static final String EXTRA_PHOTO_ID = "extra_photo_id";
@@ -84,7 +80,7 @@ public class PhotoCommentsActivity extends BaseActivity<MarsPhotoComments> {
         }
     }
 
-    @Override Presenter getPresenter() {
+    @Override protected Presenter getPresenter() {
         return photoCommentPresenter;
     }
 

@@ -1,8 +1,6 @@
-package me.lolevsky.nasaplanetary.presenter;
+package me.lolevsky.nasaplanetary.view.screens.marsphoto;
 
 import android.os.Bundle;
-
-import java.util.Observable;
 
 import javax.inject.Inject;
 
@@ -10,12 +8,12 @@ import dagger.internal.Preconditions;
 import me.lolevsky.nasaplanetary.data.net.result.MarsPhotosResponse;
 import me.lolevsky.nasaplanetary.domain.interactor.CommentsInteraptor;
 import me.lolevsky.nasaplanetary.domain.interactor.MarsPhotosInteraptor;
-import me.lolevsky.nasaplanetary.domain.repository.IComments;
 import me.lolevsky.nasaplanetary.domain.tracking.ITracking;
 import me.lolevsky.nasaplanetary.mapper.MarsPhotosModelDataMapper;
 import me.lolevsky.nasaplanetary.model.MarsPhotosModel;
+import me.lolevsky.nasaplanetary.view.presenter.BasePresenter;
 import me.lolevsky.nasaplanetary.view.IView;
-import me.lolevsky.nasaplanetary.view.PhotoCommentsActivity;
+import me.lolevsky.nasaplanetary.view.screens.photocomment.PhotoCommentsActivity;
 import rx.Subscriber;
 
 public class MarsPhotosPresenter extends BasePresenter<IView, MarsPhotosModel, MarsPhotosResponse> {

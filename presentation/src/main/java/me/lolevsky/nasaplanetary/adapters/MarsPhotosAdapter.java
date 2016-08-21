@@ -14,7 +14,7 @@ import butterknife.OnClick;
 import me.lolevsky.nasaplanetary.R;
 import me.lolevsky.nasaplanetary.domain.imageloader.IImageLoader;
 import me.lolevsky.nasaplanetary.model.objects.MarsPhoto;
-import me.lolevsky.nasaplanetary.presenter.MarsPhotosPresenter;
+import me.lolevsky.nasaplanetary.view.screens.marsphoto.MarsPhotosPresenter;
 import me.lolevsky.nasaplanetary.widget.ProgressImageView;
 import rx.Subscriber;
 

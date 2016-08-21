@@ -6,20 +6,19 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import org.parceler.Parcels;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import me.lolevsky.nasaplanetary.presenter.Presenter;
+import me.lolevsky.nasaplanetary.view.presenter.Presenter;
 
 public abstract class BaseActivity<M> extends AppCompatActivity implements IView<M> {
     private final String SAVE_INSTANCE_STATE = "SaveInstanceState";
 
     Dialog errorDialog;
 
-    abstract Presenter getPresenter();
+    protected abstract Presenter getPresenter();
 
     @Override protected void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putParcelable(SAVE_INSTANCE_STATE, Parcels.wrap(getPresenter().getModel()));

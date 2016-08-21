@@ -1,4 +1,4 @@
-package me.lolevsky.nasaplanetary.presenter;
+package me.lolevsky.nasaplanetary.view.screens.main;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import me.lolevsky.nasaplanetary.domain.interactor.MainScreenInterapter;
 import me.lolevsky.nasaplanetary.domain.tracking.ITracking;
 import me.lolevsky.nasaplanetary.mapper.MainScreenModelDataMapper;
 import me.lolevsky.nasaplanetary.model.MainScreenModule;
+import me.lolevsky.nasaplanetary.view.presenter.BasePresenter;
 import me.lolevsky.nasaplanetary.view.IView;
 
 public class MainPresenter extends BasePresenter<IView, MainScreenModule, List<MainScreenEntity>> {

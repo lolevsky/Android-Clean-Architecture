@@ -1,4 +1,4 @@
-package me.lolevsky.nasaplanetary.presenter;
+package me.lolevsky.nasaplanetary.view.presenter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +11,8 @@ import me.lolevsky.nasaplanetary.view.IView;
 import rx.Subscriber;
 
 public abstract class BasePresenter<T extends IView, M, K> implements Presenter<T, M>, PageController.onNewPageRequest {
-    T view;
-    M model;
+    protected T view;
+    protected M model;
     BaseInteractor interaptor;
     IModelDataMapper<K, M> modelDataMapper;
     boolean isSupportPaging = false;

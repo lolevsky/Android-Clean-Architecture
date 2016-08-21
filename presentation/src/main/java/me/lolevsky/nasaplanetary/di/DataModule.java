@@ -13,13 +13,16 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import me.lolevsky.nasaplanetary.BuildConfig;
 import me.lolevsky.nasaplanetary.MainApplication;
+import me.lolevsky.nasaplanetary.data.remoteconfig.RemoteConfig;
 import me.lolevsky.nasaplanetary.data.repository.Comments;
 import me.lolevsky.nasaplanetary.data.repository.MarsPhotos;
 import me.lolevsky.nasaplanetary.domain.imageloader.IImageLoader;
 import me.lolevsky.nasaplanetary.data.imageloader.ImageLoader;
 import me.lolevsky.nasaplanetary.data.repository.PlanetaryApod;
 import me.lolevsky.nasaplanetary.data.net.NasaService;
+import me.lolevsky.nasaplanetary.domain.remoteconfig.IRemoteConfig;
 import me.lolevsky.nasaplanetary.domain.repository.IComments;
 import me.lolevsky.nasaplanetary.domain.repository.IMarsPhotos;
 import me.lolevsky.nasaplanetary.domain.tracking.ITracking;
@@ -49,8 +52,7 @@ public class DataModule {
         return new MarsPhotos(nasaService);
     }
 
-    @Singleton
-    @Provides ITracking provideTracking(MainApplication application) {
+    @Singleton @Provides ITracking provideTracking(MainApplication application) {
         int playServicesStatus = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(application);
         if (playServicesStatus == ConnectionResult.SUCCESS) {
             return new Tracking(FirebaseAnalytics.getInstance(application));
@@ -89,6 +91,29 @@ public class DataModule {
 
                 @Override public Observable sendComment(String photoId, String message) {
                     return Observable.error(new RuntimeException("FireBase not supported"));
+                }
+            };
+        }
+    }
+
+    @Singleton @Provides IRemoteConfig provideRemoteConfig(MainApplication application) {
+        int playServicesStatus = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(application);
+        if (playServicesStatus == ConnectionResult.SUCCESS) {
+            IRemoteConfig remoteConfig = new RemoteConfig();
+            remoteConfig.init(BuildConfig.DEBUG);
+
+            return remoteConfig;
+        }else{
+            return new IRemoteConfig() {
+
+                @Override
+                public void init(boolean isDebug) {
+
+                }
+
+                @Override
+                public boolean getBoolean(String key) {
+                    return false;
                 }
             };
         }

@@ -30,6 +30,7 @@ dependencies {
     compile "com.google.firebase:firebase-database:$rootProject.ext.firebase"
     compile "com.google.firebase:firebase-core:$rootProject.ext.firebase"
     compile "com.google.firebase:firebase-crash:$rootProject.ext.firebase"
+    compile "com.google.firebase:firebase-config:$rootProject.ext.firebase"
     compile 'com.google.code.gson:gson:2.4'
     compile 'javax.annotation:jsr250-api:1.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'

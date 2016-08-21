@@ -1,4 +1,4 @@
-package me.lolevsky.nasaplanetary.presenter;
+package me.lolevsky.nasaplanetary.view.presenter;
 
 import android.support.annotation.NonNull;
 

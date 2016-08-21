@@ -10,7 +10,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.lolevsky.nasaplanetary.R;
 import me.lolevsky.nasaplanetary.data.net.request.PhotoComment;
-import me.lolevsky.nasaplanetary.presenter.PhotoCommentPresenter;
+import me.lolevsky.nasaplanetary.view.screens.photocomment.PhotoCommentPresenter;
 
 public class PhotoCommentsAdapter extends RecyclerView.Adapter<PhotoCommentsAdapter.MyViewHolder> {
     private PhotoCommentPresenter photoCommentPresenter;

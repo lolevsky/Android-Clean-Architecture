@@ -1,4 +1,4 @@
-package me.lolevsky.nasaplanetary.presenter;
+package me.lolevsky.nasaplanetary.view.screens.photocomment;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.GenericTypeIndicator;
@@ -18,7 +18,7 @@ import me.lolevsky.nasaplanetary.data.net.request.PhotoComment;
 import me.lolevsky.nasaplanetary.domain.interactor.CommentsInteraptor;
 import me.lolevsky.nasaplanetary.domain.tracking.ITracking;
 import me.lolevsky.nasaplanetary.model.objects.MarsPhotoComments;
-import me.lolevsky.nasaplanetary.view.PhotoCommentsActivity;
+import me.lolevsky.nasaplanetary.view.presenter.Presenter;
 import rx.Subscriber;
 
 public class PhotoCommentPresenter implements Presenter<PhotoCommentsActivity, MarsPhotoComments> {

@@ -1,4 +1,4 @@
-package me.lolevsky.nasaplanetary.view;
+package me.lolevsky.nasaplanetary.view.screens.main;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -24,8 +24,10 @@ import me.lolevsky.nasaplanetary.adapters.MainViewAdapter;
 import me.lolevsky.nasaplanetary.adapters.OnItemClicked;
 import me.lolevsky.nasaplanetary.domain.imageloader.IImageLoader;
 import me.lolevsky.nasaplanetary.model.MainScreenModule;
-import me.lolevsky.nasaplanetary.presenter.MainPresenter;
-import me.lolevsky.nasaplanetary.presenter.Presenter;
+import me.lolevsky.nasaplanetary.view.presenter.Presenter;
+import me.lolevsky.nasaplanetary.view.BaseActivity;
+import me.lolevsky.nasaplanetary.view.screens.marsphoto.MarsPhotosActivity;
+import me.lolevsky.nasaplanetary.view.screens.planetoryapod.PlanetaryApodActivity;
 
 public class MainActivity extends BaseActivity<MainScreenModule> implements OnItemClicked {
     @Inject MainApplication application;
@@ -73,7 +75,7 @@ public class MainActivity extends BaseActivity<MainScreenModule> implements OnIt
         }
     }
 
-    @Override Presenter getPresenter() {
+    @Override protected Presenter getPresenter() {
         return mainPresenter;
     }
 

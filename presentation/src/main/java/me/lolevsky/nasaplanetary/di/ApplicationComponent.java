@@ -4,10 +4,10 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import me.lolevsky.nasaplanetary.MainApplication;
-import me.lolevsky.nasaplanetary.view.MainActivity;
-import me.lolevsky.nasaplanetary.view.MarsPhotosActivity;
-import me.lolevsky.nasaplanetary.view.PhotoCommentsActivity;
-import me.lolevsky.nasaplanetary.view.PlanetaryApodActivity;
+import me.lolevsky.nasaplanetary.view.screens.main.MainActivity;
+import me.lolevsky.nasaplanetary.view.screens.marsphoto.MarsPhotosActivity;
+import me.lolevsky.nasaplanetary.view.screens.photocomment.PhotoCommentsActivity;
+import me.lolevsky.nasaplanetary.view.screens.planetoryapod.PlanetaryApodActivity;
 
 @Singleton
 @Component(
