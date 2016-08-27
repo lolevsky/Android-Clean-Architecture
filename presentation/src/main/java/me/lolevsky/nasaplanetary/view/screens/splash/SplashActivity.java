@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-
 import javax.inject.Inject;
 
 import me.lolevsky.nasaplanetary.MainApplication;
@@ -21,7 +18,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ((MainApplication) getApplication()).getApplicationComponent().inject(this);
 
-        //get the opportunity for remote config get data.
+        //give the opportunity for remote config get data.
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -29,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }, 1000);
+        }, 2000);
     }
 
     @Override

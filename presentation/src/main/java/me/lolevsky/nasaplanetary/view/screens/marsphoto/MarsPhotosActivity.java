@@ -36,6 +36,8 @@ public class MarsPhotosActivity extends BaseActivity<MarsPhotosModel> {
 
     MarsPhotosAdapter marsPhotosAdapter;
 
+    boolean isFirstTimeCalled = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +56,14 @@ public class MarsPhotosActivity extends BaseActivity<MarsPhotosModel> {
         recyclerView.setAdapter(marsPhotosAdapter);
 
         marsPhotosPresenter.initPageController(recyclerView);
+    }
 
-        if (savedInstanceState == null) {
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(!isFirstTimeCalled){
+            isFirstTimeCalled = true;
             marsPhotosPresenter.loadData();
         }
     }

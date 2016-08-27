@@ -35,8 +35,9 @@ public class PlanetaryApodActivity extends BaseActivity<ApodModel> {
     @BindView(R.id.progress_bar) ProgressBar progressBar;
     @BindView(R.id.image_header) ProgressImageView imageView;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    boolean isFirstTimeCalled = false;
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MainApplication) getApplication()).getApplicationComponent().inject(this);
 
@@ -45,8 +46,13 @@ public class PlanetaryApodActivity extends BaseActivity<ApodModel> {
 
         setSupportActionBar(toolbar);
         intActionBar();
+    }
 
-        if (savedInstanceState == null) {
+    @Override protected void onStart() {
+        super.onStart();
+
+        if(!isFirstTimeCalled){
+            isFirstTimeCalled = true;
             planetaryApodPresenter.loadData();
         }
     }
