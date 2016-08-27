@@ -11,6 +11,7 @@ More explanations about the project you can find in flawing articles:
 - https://medium.com/@lolevsky/design-of-android-application-for-developers-what-is-your-favorite-approach-d16e23cf2ce3
 - https://medium.com/@lolevsky/integrating-firebase-analytics-with-google-analytics-b888ef243e83
 - https://medium.com/@lolevsky/inject-firebase-into-your-android-project-58b5d77744e9
+- https://medium.com/@lolevsky/are-you-sure-in-your-new-feature-a-b-testing-might-help-3068796dbdc
 
 ![alt tag](https://github.com/lolevsky/Android-Clean-Architecture/blob/master/screenShots/device-2016-07-14-171559.png)
 
