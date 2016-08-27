@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import dagger.internal.Preconditions;
 import me.lolevsky.nasaplanetary.domain.entety.MainScreenEntity;
 import me.lolevsky.nasaplanetary.domain.interactor.MainScreenInterapter;
+import me.lolevsky.nasaplanetary.domain.remoteconfig.IRemoteConfig;
 import me.lolevsky.nasaplanetary.domain.tracking.ITracking;
 import me.lolevsky.nasaplanetary.mapper.MainScreenModelDataMapper;
 import me.lolevsky.nasaplanetary.model.MainScreenModule;

@@ -74,6 +74,10 @@ public class DataModule {
                 @Override public void LogException(String exception) {
 
                 }
+
+                @Override public void setUserProperty(String experimentName, IRemoteConfig.ExperimentVariant experimentVariant) {
+
+                }
             };
         }
     }
@@ -96,24 +100,15 @@ public class DataModule {
         }
     }
 
-    @Singleton @Provides IRemoteConfig provideRemoteConfig(MainApplication application) {
+    @Singleton @Provides IRemoteConfig provideRemoteConfig(MainApplication application, ITracking tracking) {
         int playServicesStatus = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(application);
         if (playServicesStatus == ConnectionResult.SUCCESS) {
-            IRemoteConfig remoteConfig = new RemoteConfig();
-            remoteConfig.init(BuildConfig.DEBUG);
-
-            return remoteConfig;
+            return new RemoteConfig(BuildConfig.DEBUG, tracking);
         }else{
             return new IRemoteConfig() {
 
-                @Override
-                public void init(boolean isDebug) {
-
-                }
-
-                @Override
-                public boolean getBoolean(String key) {
-                    return false;
+                @Override public ExperimentVariant getExperimentVariant(String key) {
+                    return ExperimentVariant.NONE;
                 }
             };
         }

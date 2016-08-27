@@ -17,7 +17,7 @@ public abstract class BasePresenter<T extends IView, M, K> implements Presenter<
     IModelDataMapper<K, M> modelDataMapper;
     boolean isSupportPaging = false;
     PageController pageController;
-    ITracking tracking;
+    protected ITracking tracking;
 
     BasePresenter() {
 

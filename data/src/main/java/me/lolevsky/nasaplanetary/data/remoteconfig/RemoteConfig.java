@@ -9,12 +9,15 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import me.lolevsky.nasaplanetary.data.R;
 import me.lolevsky.nasaplanetary.domain.remoteconfig.IRemoteConfig;
+import me.lolevsky.nasaplanetary.domain.tracking.ITracking;
 
 public class RemoteConfig implements IRemoteConfig{
     FirebaseRemoteConfig firebaseRemoteConfig;
+    final ITracking tracking;
 
-    @Override
-    public void init(boolean isDebug) {
+    public RemoteConfig(boolean isDebug, final ITracking tracking) {
+        this.tracking = tracking;
+
         firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
                 .setDeveloperModeEnabled(isDebug)
@@ -29,13 +32,20 @@ public class RemoteConfig implements IRemoteConfig{
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             firebaseRemoteConfig.activateFetched();
+
+                            tracking.setUserProperty(EXPERIMENT_HOME_SCREEN_ABOUT_MENU, getExperimentVariant(EXPERIMENT_HOME_SCREEN_ABOUT_MENU));
                         }
                     }
                 });
     }
 
     @Override
-    public boolean getBoolean(String key) {
-        return firebaseRemoteConfig.getBoolean(key);
+    public ExperimentVariant getExperimentVariant(String key) {
+        String result = firebaseRemoteConfig.getString(key);
+
+        if(result != null && !result.isEmpty()){
+            return ExperimentVariant.valueOf(result.toUpperCase());
+        }
+        return ExperimentVariant.NONE;
     }
 }

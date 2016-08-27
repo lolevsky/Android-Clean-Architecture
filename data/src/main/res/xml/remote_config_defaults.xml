@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <defaultsMap>
     <entry>
-        <key>home_screen</key>
-        <value>false</value>
+        <key>home_screen_about_menu</key>
+        <value>NONE</value>
     </entry>
 </defaultsMap>

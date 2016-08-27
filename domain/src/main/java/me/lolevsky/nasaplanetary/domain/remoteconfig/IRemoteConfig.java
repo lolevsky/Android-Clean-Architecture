@@ -1,7 +1,11 @@
 package me.lolevsky.nasaplanetary.domain.remoteconfig;
 
 public interface IRemoteConfig {
-    void init(boolean isDebug);
+    static final String EXPERIMENT_HOME_SCREEN_ABOUT_MENU = "home_screen_about_menu";
 
-    boolean getBoolean(String key);
+    enum ExperimentVariant{
+        NONE, VARIANT_A, VARIANT_B
+    }
+
+    ExperimentVariant getExperimentVariant(String key);
 }

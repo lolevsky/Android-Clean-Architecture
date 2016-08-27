@@ -6,6 +6,7 @@ import com.google.firebase.crash.FirebaseCrash;
 import android.os.Bundle;
 
 import dagger.internal.Preconditions;
+import me.lolevsky.nasaplanetary.domain.remoteconfig.IRemoteConfig;
 import me.lolevsky.nasaplanetary.domain.tracking.ITracking;
 
 public class Tracking implements ITracking {
@@ -39,5 +40,11 @@ public class Tracking implements ITracking {
 
     @Override public void LogException(String exception) {
         FirebaseCrash.log(exception);
+    }
+
+    @Override public void setUserProperty(String experimentName, IRemoteConfig.ExperimentVariant experimentVariant) {
+        synchronized (firebaseAnalytics) {
+            firebaseAnalytics.setUserProperty(experimentName, experimentVariant.name());
+        }
     }
 }

@@ -5,6 +5,12 @@
     <string name="no_comments">No comment</string>
     <string name="zero_comments">Comment</string>
     <string name="many_comments">%1$s Comments</string>
+    <string name="menu_about">About</string>
+    <string name="title_about">About</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_about_text">Example project how to design Android application with clean architecture, MVP, RXJava and Dagger, create your next project to be more scalable and testable.
+    \nYou can find the source code in GitHub
+    \nhttps://github.com/lolevsky/Android-Clean-Architecture</string>
 
     <plurals name="number_of_comments">
         <item quantity="one">@string/zero_comments</item>
