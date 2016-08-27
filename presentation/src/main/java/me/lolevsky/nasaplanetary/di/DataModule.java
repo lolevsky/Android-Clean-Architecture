@@ -82,10 +82,12 @@ public class DataModule {
         }
     }
 
-    @Provides IComments provideComments(MainApplication application) {
+    @Singleton @Provides IComments provideComments(MainApplication application) {
         int playServicesStatus = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(application);
         if (playServicesStatus == ConnectionResult.SUCCESS) {
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            firebaseDatabase.setPersistenceEnabled(true);
+            DatabaseReference databaseReference = firebaseDatabase.getReference();
             return new Comments(databaseReference);
         }else{
             return new IComments() {
@@ -114,8 +116,7 @@ public class DataModule {
         }
     }
 
-    @Singleton
-    @Provides IImageLoader provideImageLoader(MainApplication mainApplication) {
+    @Singleton @Provides IImageLoader provideImageLoader(MainApplication mainApplication) {
         return new ImageLoader(mainApplication);
     }
 }

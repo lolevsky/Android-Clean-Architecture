@@ -110,12 +110,16 @@ public class PhotoCommentPresenter implements Presenter<PhotoCommentsActivity, M
             }
 
             @Override public void onError(Throwable e) {
-                view.sendComplite(false);
-                view.onError(e.getMessage());
+                if(view != null){
+                    view.sendComplite(false);
+                    view.onError(e.getMessage());
+                }
             }
 
             @Override public void onNext(Boolean o) {
-                view.sendComplite(o);
+                if(view != null) {
+                    view.sendComplite(o);
+                }
             }
         });
     }

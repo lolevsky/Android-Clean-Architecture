@@ -36,16 +36,4 @@ public class MainApplication extends Application {
     public ApplicationComponent getApplicationComponent(){
         return component;
     }
-
-    public void setPersistence() {
-        synchronized (isPersistent) {
-            if (!isPersistent) {
-                final int playServicesStatus = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
-                if (playServicesStatus == ConnectionResult.SUCCESS) {
-                    FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-                    isPersistent = true;
-                }
-            }
-        }
-    }
 }

@@ -1,8 +1,5 @@
 package me.lolevsky.nasaplanetary.view.screens.main;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -12,7 +9,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -34,8 +30,8 @@ import me.lolevsky.nasaplanetary.adapters.OnItemClicked;
 import me.lolevsky.nasaplanetary.domain.imageloader.IImageLoader;
 import me.lolevsky.nasaplanetary.domain.remoteconfig.IRemoteConfig;
 import me.lolevsky.nasaplanetary.model.MainScreenModule;
-import me.lolevsky.nasaplanetary.view.presenter.Presenter;
 import me.lolevsky.nasaplanetary.view.BaseActivity;
+import me.lolevsky.nasaplanetary.view.presenter.Presenter;
 import me.lolevsky.nasaplanetary.view.screens.marsphoto.MarsPhotosActivity;
 import me.lolevsky.nasaplanetary.view.screens.planetoryapod.PlanetaryApodActivity;
 
@@ -78,14 +74,6 @@ public class MainActivity extends BaseActivity<MainScreenModule> implements OnIt
         recyclerView.setAdapter(mainViewAdapter);
     }
 
-    @Override public void onStart() {
-        super.onStart();
-        final int playServicesStatus = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
-        if (playServicesStatus == ConnectionResult.SUCCESS) {
-            application.setPersistence();
-        }
-    }
-
     @Override protected Presenter getPresenter() {
         return mainPresenter;
     }
@@ -99,7 +87,9 @@ public class MainActivity extends BaseActivity<MainScreenModule> implements OnIt
     }
 
     @Override public void onComplete(MainScreenModule model) {
-        mainViewAdapter.setList(model.getEntityList());
+        if (model != null) {
+            mainViewAdapter.setList(model.getEntityList());
+        }
     }
 
     @Override public void onError(String error) {
@@ -148,7 +138,10 @@ public class MainActivity extends BaseActivity<MainScreenModule> implements OnIt
         builder.setPositiveButton(R.string.dialog_ok, null);
         AlertDialog alertDialog = builder.show();
 
-        ((TextView) alertDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+        TextView textView = ((TextView) alertDialog.findViewById(android.R.id.message));
+        if(textView != null){
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
+        }
     }
 
     public void onItemClicked(int position) {
