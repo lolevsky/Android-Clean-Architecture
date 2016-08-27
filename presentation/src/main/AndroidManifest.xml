@@ -18,14 +18,19 @@
                 android:value="GlideModule"/>
 
         <activity
+            android:name=".view.screens.splash.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
                 android:name=".view.screens.main.MainActivity"
                 android:launchMode="singleTop"
                 android:configChanges="keyboard|orientation">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
                 android:name=".view.screens.planetoryapod.PlanetaryApodActivity"

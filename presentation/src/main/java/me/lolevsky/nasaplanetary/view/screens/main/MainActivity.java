@@ -114,10 +114,11 @@ public class MainActivity extends BaseActivity<MainScreenModule> implements OnIt
         MenuItem about = menu.findItem(R.id.menu_about);
         switch (remoteConfig.getExperimentVariant(IRemoteConfig.EXPERIMENT_HOME_SCREEN_ABOUT_MENU)){
             case VARIANT_A:
+                about.setIcon(R.drawable.ic_info_outline_white_24dp);
                 about.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
                 break;
             case VARIANT_B:
-                about.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+                about.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
                 break;
             default:
                 about.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);

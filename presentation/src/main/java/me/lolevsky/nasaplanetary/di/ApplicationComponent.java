@@ -8,6 +8,7 @@ import me.lolevsky.nasaplanetary.view.screens.main.MainActivity;
 import me.lolevsky.nasaplanetary.view.screens.marsphoto.MarsPhotosActivity;
 import me.lolevsky.nasaplanetary.view.screens.photocomment.PhotoCommentsActivity;
 import me.lolevsky.nasaplanetary.view.screens.planetoryapod.PlanetaryApodActivity;
+import me.lolevsky.nasaplanetary.view.screens.splash.SplashActivity;
 
 @Singleton
 @Component(
@@ -21,6 +22,8 @@ import me.lolevsky.nasaplanetary.view.screens.planetoryapod.PlanetaryApodActivit
 
 public interface ApplicationComponent {
     void inject(MainApplication mainApplication);
+
+    void inject(SplashActivity splashActivity);
 
     void inject(MainActivity mainActivity);
 
