@@ -13,10 +13,10 @@ import me.lolevsky.nasaplanetary.domain.repository.IMarsPhotos;
 import rx.Observable;
 import rx.Scheduler;
 
-public class MainScreenInterapter extends BaseInteractor {
+public class MainScreenInteractor extends BaseInteractor {
 
     @Inject
-    public MainScreenInterapter(@NonNull Scheduler mainScheduler,
+    public MainScreenInteractor(@NonNull Scheduler mainScheduler,
                                 @NonNull Scheduler ioScheduler) {
         super(mainScheduler, ioScheduler);
     }
